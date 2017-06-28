@@ -16,6 +16,9 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.esgi.androtopic.R;
+import com.esgi.androtopic.Tools.RealmInstance;
+
+import io.realm.Realm;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -74,14 +77,28 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.signout) {
+            AlertDialog.Builder ad = new AlertDialog.Builder(this);
+            ad.setTitle("Sign out")
+                    .setMessage("Are you sure you want to sign out ?")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Realm realm =  RealmInstance.getRealmInstance(getApplicationContext());
+                            realm.beginTransaction();
+                            realm.deleteAll();
+                            realm.commitTransaction();
+                            realm.close();
+                            finishAffinity();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setIcon(R.drawable.splash)
+                    .show();
         }
 
         return super.onOptionsItemSelected(item);
