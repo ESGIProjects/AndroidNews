@@ -1,7 +1,11 @@
 package com.esgi.androtopic.Data.Api;
 
 import com.esgi.androtopic.Data.Model.PostAuth;
+import com.esgi.androtopic.Data.Model.PostComment;
+import com.esgi.androtopic.Data.Model.PostNews;
+import com.esgi.androtopic.Data.Model.PostPost;
 import com.esgi.androtopic.Data.Model.PostSubscribe;
+import com.esgi.androtopic.Data.Model.PostTopic;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -19,12 +23,18 @@ public interface ApiInterface {
     @POST("auth/subscribe")
     Call<Void> sign(@Body PostSubscribe ps);
 
-    //@POST("/comments")
+    @POST("/comments")
+    Call<Void> postComments(@Body PostComment pc);
 
-    //@POST("/news")
+    @POST("/news")
+    Call<Void> postNews(@Body PostNews pn);
 
-    //@POST("/posts")
+    @POST("/topic")
+    Call<Void> postTopic(@Body PostTopic pt);
 
-    //@POST("/topics")
+    @POST("/post")
+    Call<Void> postPost(@Body PostPost pn);
+
+
 
 }
