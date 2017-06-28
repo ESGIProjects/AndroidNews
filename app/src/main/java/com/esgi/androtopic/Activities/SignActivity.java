@@ -60,9 +60,9 @@ public class SignActivity extends AppCompatActivity {
         pd.show();
         PostSubscribe ps = new PostSubscribe(email, password, firstname, lastname);
         ApiCall.getRetrofitInstance().sign(ps)
-                .enqueue(new Callback<PostSubscribe>() {
+                .enqueue(new Callback<Void>() {
                     @Override
-                    public void onResponse(Call<PostSubscribe> call, Response<PostSubscribe> response) {
+                    public void onResponse(Call<Void> call, Response<Void> response) {
                         Log.i("RESPONSE : ", response.message());
                         if(response.code() == 200){
                             pd.dismiss();
@@ -81,7 +81,7 @@ public class SignActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<PostSubscribe> call, Throwable t) {
+                    public void onFailure(Call<Void> call, Throwable t) {
                         pd.dismiss();
                         Log.i("FAILURE : ", "No response from server");
                         Toast.makeText(getApplicationContext(),"Retry after !",Toast.LENGTH_SHORT).show();

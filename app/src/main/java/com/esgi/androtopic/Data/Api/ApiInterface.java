@@ -17,7 +17,7 @@ public interface ApiInterface {
     Call<String> login(@Body PostAuth pa);
 
     @POST("auth/subscribe")
-    Call<PostSubscribe> sign(@Body PostSubscribe ps);
+    Call<Void> sign(@Body PostSubscribe ps);
 
     //@POST("/comments")
 
