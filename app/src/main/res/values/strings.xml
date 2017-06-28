@@ -21,4 +21,8 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="signout">Sign Out</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <string name="title_news">News</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_topic">Topics</string>
 </resources>
