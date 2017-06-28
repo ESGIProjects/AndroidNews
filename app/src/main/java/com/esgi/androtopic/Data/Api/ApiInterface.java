@@ -9,13 +9,19 @@ import com.esgi.androtopic.Data.Model.PostTopic;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 /**
  * Created by kevin on 24/06/2017.
  */
 
 public interface ApiInterface {
+
+    // POST ENDPOINTS
 
     @POST("auth/login")
     Call<String> login(@Body PostAuth pa);
@@ -29,12 +35,67 @@ public interface ApiInterface {
     @POST("/news")
     Call<Void> postNews(@Body PostNews pn);
 
+    @POST("/news/{id}/moderate")
+    Call<Void> postNews(@Body PostNews pn, @Path("id") int id);
+
     @POST("/topic")
     Call<Void> postTopic(@Body PostTopic pt);
 
     @POST("/post")
     Call<Void> postPost(@Body PostPost pn);
 
+    //DELETE ENDPOINTS
 
+    @DELETE("/comments/{id}")
+    Call<Void> delComment(@Path("id") int id);
+
+    @DELETE("/news/{id}")
+    Call<Void> delNews(@Path("id") int id);
+
+    @DELETE("/posts/{id}")
+    Call<Void> delPost(@Path("id") int id);
+
+    @DELETE("/topics/{id}")
+    Call<Void> delTopic(@Path("id") int id);
+
+    //GET ENDPOINTS
+
+    @GET("/comments")
+    Call<Void> getComments();
+
+    @GET("/comments/{id}")
+    Call<Void> getComment(@Path("id") int id);
+
+    @GET("/news")
+    Call<Void> getNews();
+
+    @GET("/news/{id}")
+    Call<Void> getNews(@Path("id") int id);
+
+    @GET("/posts")
+    Call<Void> getPosts();
+
+    @GET("/posts/{id}")
+    Call<Void> getPost(@Path("id") int id);
+
+    @GET("/topics")
+    Call<Void> getTopics();
+
+    @GET("/topics/{id}")
+    Call<Void> getTopic(@Path("id") int id);
+
+    // PUT ENDPOINTS
+
+    @PUT("/comments/{id}")
+    Call<Void> putComment(@Path("id") int id);
+
+    @PUT("/news/{id}")
+    Call<Void> putNews(@Path("id") int id);
+
+    @PUT("/posts/{id}")
+    Call<Void> putPost(@Path("id") int id);
+
+    @PUT("/topics/{id}")
+    Call<Void> putTopic(@Path("id") int id);
 
 }
