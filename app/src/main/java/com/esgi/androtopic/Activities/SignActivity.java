@@ -74,6 +74,7 @@ public class SignActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(),"The account is created !",Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(SignActivity.this, LoginActivity.class);
                             startActivity(i);
+                            overridePendingTransition(R.animator.slide_from_left, R.animator.slide_to_right);
                         }
                         else{
                             Toast.makeText(getApplicationContext(),"Retry !",Toast.LENGTH_SHORT).show();
@@ -93,6 +94,7 @@ public class SignActivity extends AppCompatActivity {
     public void onBackPressed() {
         Intent i = new Intent(SignActivity.this, LoginActivity.class);
         startActivity(i);
+        overridePendingTransition(R.animator.slide_from_left, R.animator.slide_to_right);
     }
 
     public void clearFields(){

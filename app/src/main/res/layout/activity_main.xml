@@ -38,5 +38,13 @@
         android:layout_gravity="bottom"
         android:background="?android:attr/windowBackground"
         app:menu="@menu/navigation"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!--<fragment
+        android:name="com.esgi.androtopic.Fragments.NewsFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></fragment>-->
+    </FrameLayout>
 
 </LinearLayout>

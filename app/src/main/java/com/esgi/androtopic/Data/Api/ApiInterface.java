@@ -36,7 +36,7 @@ public interface ApiInterface {
     Call<Void> postNews(@Body PostNews pn);
 
     @POST("/news/{id}/moderate")
-    Call<Void> postNews(@Body PostNews pn, @Path("id") int id);
+    Call<Void> postNews(@Path("id") int id);
 
     @POST("/topic")
     Call<Void> postTopic(@Body PostTopic pt);
@@ -87,15 +87,15 @@ public interface ApiInterface {
     // PUT ENDPOINTS
 
     @PUT("/comments/{id}")
-    Call<Void> putComment(@Path("id") int id);
+    Call<Void> putComment(@Body PostComment pc ,@Path("id") int id);
 
     @PUT("/news/{id}")
-    Call<Void> putNews(@Path("id") int id);
+    Call<Void> putNews(@Body PostNews pn ,@Path("id") int id);
 
     @PUT("/posts/{id}")
-    Call<Void> putPost(@Path("id") int id);
+    Call<Void> putPost(@Body PostPost pp ,@Path("id") int id);
 
     @PUT("/topics/{id}")
-    Call<Void> putTopic(@Path("id") int id);
+    Call<Void> putTopic(@Body PostTopic pc ,@Path("id") int id);
 
 }

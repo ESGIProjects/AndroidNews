@@ -35,11 +35,13 @@ public class SplashScreenActivity extends Activity {
                 if(result.isEmpty()){
                     Intent i = new Intent(SplashScreenActivity.this, LoginActivity.class);
                     startActivity(i);
+                    overridePendingTransition(R.animator.slide_from_right, R.animator.slide_to_left);
                     finish();
                 }
                 else{
                     Intent i = new Intent(SplashScreenActivity.this, MainActivity.class);
                     startActivity(i);
+                    overridePendingTransition(R.animator.slide_from_right, R.animator.slide_to_left);
                     finish();
                 }
             }

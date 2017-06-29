@@ -48,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
     @OnClick(R.id.sign) void sign(){
         Intent i = new Intent(LoginActivity.this, SignActivity.class);
         startActivity(i);
+        overridePendingTransition(R.animator.slide_from_right, R.animator.slide_to_left);
     }
 
     @Override
@@ -74,6 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"Success !",Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(i);
+                    overridePendingTransition(R.animator.slide_from_right, R.animator.slide_to_left);
                 }
                 else{
                     Toast.makeText(getApplicationContext(),"There is an error, retry !",Toast.LENGTH_SHORT).show();
@@ -110,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        finish();
+        finishAffinity();
     }
 }
 

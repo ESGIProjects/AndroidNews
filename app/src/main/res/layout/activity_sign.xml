@@ -8,6 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/colorPrimary"
     tools:context="com.esgi.androtopic.Activities.SignActivity">
 
     <LinearLayout
@@ -15,14 +16,30 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <android.support.design.widget.TextInputLayout
+            android:theme="@style/TextAppearence.App.TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+
         <EditText
             android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/prompt_email"
             android:inputType="textEmailAddress"
+            android:textColor="@color/colorWhite"
             android:maxLines="1" />
+        </android.support.design.widget.TextInputLayout>
 
+
+        <android.support.design.widget.TextInputLayout
+            android:theme="@style/TextAppearence.App.TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
         <EditText
             android:id="@+id/password"
             android:layout_width="match_parent"
@@ -30,8 +47,16 @@
             android:hint="@string/prompt_password"
             android:inputType="textPassword"
             android:layout_alignParentTop="true"
+            android:textColor="@color/colorWhite"
             android:maxLines="1"/>
+        </android.support.design.widget.TextInputLayout>
 
+        <android.support.design.widget.TextInputLayout
+            android:theme="@style/TextAppearence.App.TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
         <EditText
             android:id="@+id/firstname"
             android:layout_width="match_parent"
@@ -39,8 +64,16 @@
             android:layout_alignParentTop="true"
             android:hint="Firstname"
             android:inputType="text"
+            android:textColor="@color/colorWhite"
             android:maxLines="1"/>
+        </android.support.design.widget.TextInputLayout>
 
+        <android.support.design.widget.TextInputLayout
+            android:theme="@style/TextAppearence.App.TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
         <EditText
             android:id="@+id/lastname"
             android:layout_width="match_parent"
@@ -48,7 +81,9 @@
             android:layout_alignParentTop="true"
             android:hint="Lasttname"
             android:inputType="text"
+            android:textColor="@color/colorWhite"
             android:maxLines="1"/>
+        </android.support.design.widget.TextInputLayout>
 
         <Button
             android:id="@+id/create"
@@ -56,6 +91,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:text="@string/create_account"
+            android:textColor="@color/colorWhite"
+            android:background="@color/colorPrimaryDark"
             android:textStyle="bold" />
 
     </LinearLayout>
