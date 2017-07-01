@@ -1,5 +1,6 @@
-package com.esgi.androtopic.Data.Api;
+package com.esgi.androtopic.Data.Api.Services;
 
+import com.esgi.androtopic.Data.Api.IServiceResultListener;
 import com.esgi.androtopic.Data.Model.PostComment;
 
 /**

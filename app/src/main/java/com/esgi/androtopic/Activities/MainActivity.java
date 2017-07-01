@@ -5,11 +5,12 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.esgi.androtopic.R;
 import com.esgi.androtopic.Tools.RealmInstance;
@@ -25,6 +26,9 @@ public class MainActivity extends FragmentActivity {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView title;
+    @OnClick(R.id.fab) void action(){
+        Toast.makeText(getApplicationContext(),"test",Toast.LENGTH_SHORT).show();
+    }
     @OnClick(R.id.signout) void signout(){
         AlertDialog.Builder ad = new AlertDialog.Builder(this);
         ad.setTitle("Sign out")
@@ -35,7 +39,6 @@ public class MainActivity extends FragmentActivity {
                         realm.beginTransaction();
                         realm.deleteAll();
                         realm.commitTransaction();
-                        realm.close();
                         finishAffinity();
                     }
                 })

@@ -10,9 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.esgi.androtopic.R;
 import com.esgi.androtopic.Fragments.dummy.DummyContent;
 import com.esgi.androtopic.Fragments.dummy.DummyContent.DummyItem;
+import com.esgi.androtopic.R;
 
 /**
  * A fragment representing a list of Items.

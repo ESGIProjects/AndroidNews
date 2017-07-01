@@ -1,8 +1,7 @@
-package com.esgi.androtopic.Data.Api;
+package com.esgi.androtopic.Data.Api.Services;
 
+import com.esgi.androtopic.Data.Api.IServiceResultListener;
 import com.esgi.androtopic.Data.Model.PostTopic;
-
-import retrofit2.http.Body;
 
 /**
  * Created by kevin on 28/06/2017.

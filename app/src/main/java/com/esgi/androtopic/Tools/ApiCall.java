@@ -1,6 +1,6 @@
-package com.esgi.androtopic.Data.Api;
+package com.esgi.androtopic.Tools;
 
-import com.esgi.androtopic.Tools.RetrofitInstance;
+import com.esgi.androtopic.Data.Api.ApiInterface;
 
 /**
  * Created by kevin on 24/06/2017.

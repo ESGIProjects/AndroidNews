@@ -4,11 +4,12 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.esgi.androtopic.Data.Api.ApiCall;
+import com.esgi.androtopic.Data.Api.IServiceResultListener;
+import com.esgi.androtopic.Data.Api.ServiceResult;
+import com.esgi.androtopic.Data.Api.Services.CallService;
 import com.esgi.androtopic.Data.Model.PostSubscribe;
 import com.esgi.androtopic.R;
 import com.esgi.androtopic.Tools.CheckRules;
@@ -16,9 +17,6 @@ import com.esgi.androtopic.Tools.CheckRules;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by kevin on 22/06/2017.
@@ -27,67 +25,56 @@ import retrofit2.Response;
 public class SignActivity extends AppCompatActivity {
 
     ProgressDialog pd;
-    @BindView(R.id.email) EditText email;
-    @BindView(R.id.password) EditText pwd;
-    @BindView(R.id.firstname) EditText fn;
-    @BindView(R.id.lastname) EditText ln;
+    @BindView(R.id.email)
+    EditText email;
+    @BindView(R.id.password)
+    EditText pwd;
+    @BindView(R.id.firstname)
+    EditText fn;
+    @BindView(R.id.lastname)
+    EditText ln;
 
-    @OnClick(R.id.create) void create(){
-        if(CheckRules.isEmailValid(email.getText().toString()) && CheckRules.isPasswordValid(pwd.getText().toString()) &&
-                CheckRules.isFirstnameValid(fn.getText().toString()) && CheckRules.isLastnameValid(ln.getText().toString())){
-            signPost(email.getText().toString(),pwd.getText().toString(), fn.getText().toString(),
-                    ln.getText().toString());
+    @OnClick(R.id.create)
+    void create() {
+        if (CheckRules.isEmailValid(email.getText().toString()) && CheckRules.isPasswordValid(pwd.getText().toString()) &&
+                CheckRules.isFirstnameValid(fn.getText().toString()) && CheckRules.isLastnameValid(ln.getText().toString())) {
+            pd = new ProgressDialog(this, ProgressDialog.STYLE_SPINNER);
+            pd.setMessage("Wait...");
+            pd.show();
+            PostSubscribe ps = new PostSubscribe(email.getText().toString(), pwd.getText().toString(),
+                    fn.getText().toString(), ln.getText().toString());
+            CallService.getInstance().sign(ps, new IServiceResultListener<Void>() {
+                @Override
+                public void onResult(ServiceResult<Void> sr) {
+                    pd.dismiss();
+                    if (sr.getResponseCode() == 200) {
+                        clearFields();
+                        Toast.makeText(getApplicationContext(), "The account already exists !", Toast.LENGTH_SHORT).show();
+                    }
+                    else if (sr.getResponseCode() == 201) {
+                        Toast.makeText(getApplicationContext(), "The account is created !", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(SignActivity.this, LoginActivity.class);
+                        startActivity(i);
+                        overridePendingTransition(R.animator.slide_from_left, R.animator.slide_to_right);
+                    }
+                    else if (sr.getResponseCode() != 0){
+                        Toast.makeText(getApplicationContext(), "Retry after !", Toast.LENGTH_SHORT).show();
+                        clearFields();
+                    }
+                    else {
+                        Toast.makeText(getApplicationContext(), "No response from server !", Toast.LENGTH_SHORT).show();
+                        clearFields();
+                    }
+                }
+            });
         }
-        else{
-            Toast.makeText(getApplicationContext(),"Error !", Toast.LENGTH_SHORT).show();
-            email.getText().clear();
-            pwd.getText().clear();
-            fn.getText().clear();
-            ln.getText().clear();
-        }
-    };
+    }
 
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_sign);
         getSupportActionBar().hide();
         ButterKnife.bind(this);
-    }
-
-    public void signPost(String email, String password, String firstname, String lastname){
-        pd = new ProgressDialog(this,ProgressDialog.STYLE_SPINNER);
-        pd.setMessage("Wait...");
-        pd.show();
-        PostSubscribe ps = new PostSubscribe(email, password, firstname, lastname);
-        ApiCall.getRetrofitInstance().sign(ps)
-                .enqueue(new Callback<Void>() {
-                    @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                        Log.i("RESPONSE : ", response.message());
-                        if(response.code() == 200){
-                            pd.dismiss();
-                            Toast.makeText(getApplicationContext(),"The account already exists !",Toast.LENGTH_SHORT).show();
-                            clearFields();
-                        }
-                        else if(response.code() == 201){
-                            pd.dismiss();
-                            Toast.makeText(getApplicationContext(),"The account is created !",Toast.LENGTH_SHORT).show();
-                            Intent i = new Intent(SignActivity.this, LoginActivity.class);
-                            startActivity(i);
-                            overridePendingTransition(R.animator.slide_from_left, R.animator.slide_to_right);
-                        }
-                        else{
-                            Toast.makeText(getApplicationContext(),"Retry !",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
-                        pd.dismiss();
-                        Log.i("FAILURE : ", "No response from server");
-                        Toast.makeText(getApplicationContext(),"Retry after !",Toast.LENGTH_SHORT).show();
-                    }
-                });
     }
 
     @Override
@@ -97,7 +84,7 @@ public class SignActivity extends AppCompatActivity {
         overridePendingTransition(R.animator.slide_from_left, R.animator.slide_to_right);
     }
 
-    public void clearFields(){
+    public void clearFields() {
         email.getText().clear();
         pwd.getText().clear();
         fn.getText().clear();

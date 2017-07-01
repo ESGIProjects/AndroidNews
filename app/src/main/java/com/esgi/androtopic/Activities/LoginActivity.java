@@ -4,11 +4,12 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.esgi.androtopic.Data.Api.ApiCall;
+import com.esgi.androtopic.Data.Api.IServiceResultListener;
+import com.esgi.androtopic.Data.Api.ServiceResult;
+import com.esgi.androtopic.Data.Api.Services.CallService;
 import com.esgi.androtopic.Data.Model.PostAuth;
 import com.esgi.androtopic.Data.Model.User;
 import com.esgi.androtopic.R;
@@ -20,9 +21,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -34,7 +32,36 @@ public class LoginActivity extends AppCompatActivity {
     @OnClick(R.id.login) void login(){
         if (InternetDetection.isAvailable(getApplicationContext())) {
             if(CheckRules.isEmailValid(email.getText().toString()) && CheckRules.isPasswordValid(pwd.getText().toString())){
-                loginPost(email.getText().toString(), pwd.getText().toString());
+                pd = new ProgressDialog(this,ProgressDialog.STYLE_SPINNER);
+                pd.setMessage("Wait...");
+                pd.show();
+                final PostAuth pa = new PostAuth(email.getText().toString(),pwd.getText().toString());
+                CallService.getInstance().login(pa, new IServiceResultListener<String>() {
+                    @Override
+                    public void onResult(ServiceResult<String> sr) {
+                        pd.dismiss();
+                        if(sr.getResponseCode() == 200){
+                            Toast.makeText(getApplicationContext(),"Success !",Toast.LENGTH_SHORT).show();
+                            realmQuery(pa.getEmail(), pa.getPassword(),sr.getData());
+                            Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(i);
+                            overridePendingTransition(R.animator.slide_from_right, R.animator.slide_to_left);
+                        }
+                        else if(sr.getResponseCode() != 0){
+                            System.out.println(sr.getResponseCode());
+                            Toast.makeText(getApplicationContext(),"Retry after !",Toast.LENGTH_SHORT).show();
+                            email.getText().clear();
+                            pwd.getText().clear();
+                        }
+                        else{
+                            System.out.println(sr.getResponseCode());
+                            Toast.makeText(getApplicationContext(),"No response from server !",Toast.LENGTH_SHORT).show();
+                            email.getText().clear();
+                            pwd.getText().clear();
+                        }
+                    }
+                });
+                pd.dismiss();
             }
             else{
                 Toast.makeText(getApplicationContext(), "Error !", Toast.LENGTH_SHORT).show();
@@ -57,39 +84,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         getSupportActionBar().hide();
         ButterKnife.bind(this);
-    }
-
-    public void loginPost(final String email, final String password){
-        pd = new ProgressDialog(this,ProgressDialog.STYLE_SPINNER);
-        pd.setMessage("Wait...");
-        pd.show();
-        PostAuth pa = new PostAuth(email,password);
-        ApiCall.getRetrofitInstance().login(pa).enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                pd.dismiss();
-                Log.i("RESPONSE : ", response.message());
-                if(response.code() == 200){
-                    Log.i("TOKEN : ", response.body());
-                    realmQuery(email,password,response.body());
-                    Toast.makeText(getApplicationContext(),"Success !",Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(i);
-                    overridePendingTransition(R.animator.slide_from_right, R.animator.slide_to_left);
-                }
-                else{
-                    Toast.makeText(getApplicationContext(),"There is an error, retry !",Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                pd.dismiss();
-                Log.i("FAILURE : ", "No response from server");
-                Log.i("CAUSE : ", t.getMessage().toString());
-                Toast.makeText(getApplicationContext(),"Retry after !",Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     public void realmQuery(final String email, final String password, final String token) {

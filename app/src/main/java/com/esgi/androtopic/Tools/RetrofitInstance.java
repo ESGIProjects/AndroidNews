@@ -15,7 +15,6 @@ public class RetrofitInstance {
     public static Retrofit getInstance(String url){
         if(retrofit == null){
             retrofit = new Retrofit.Builder().baseUrl(url)
-                    //we need this fucki** converter in order to accept plain response
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
