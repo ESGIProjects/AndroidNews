@@ -9,7 +9,7 @@ import com.esgi.androtopic.Data.Model.PostTopic;
 
 public interface ITopicService {
 
-    void postTopic(PostTopic pt, IServiceResultListener<Void> isrl);
+    void postTopic(String token, PostTopic pt, IServiceResultListener<Void> isrl);
 
     void delTopic(int i, IServiceResultListener<Void> isrl);
 

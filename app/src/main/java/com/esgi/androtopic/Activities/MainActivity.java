@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.esgi.androtopic.R;
 import com.esgi.androtopic.Tools.AddNews;
+import com.esgi.androtopic.Tools.AddTopic;
 import com.esgi.androtopic.Tools.RealmInstance;
 
 import java.text.SimpleDateFormat;
@@ -32,8 +33,14 @@ public class MainActivity extends FragmentActivity {
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView title;
     @OnClick(R.id.fab) void action(){
-        AddNews an = new AddNews(this);
-        an.show();
+        if(bnv.getMenu().getItem(0).isChecked()){
+            AddNews an = new AddNews(this);
+            an.show();
+        }
+        else{
+            AddTopic at = new AddTopic(this);
+            at.show();
+        }
     }
     @OnClick(R.id.signout) void signout(){
         AlertDialog.Builder ad = new AlertDialog.Builder(this);

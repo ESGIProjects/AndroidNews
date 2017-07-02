@@ -9,7 +9,7 @@ import com.esgi.androtopic.Data.Model.PostPost;
 
 public interface IPostService {
 
-    void postPost(PostPost pp, IServiceResultListener<Void> isrl);
+    void postPost(String token, PostPost pp, IServiceResultListener<Void> isrl);
 
     void delPost(int i, IServiceResultListener<Void> isrl);
 

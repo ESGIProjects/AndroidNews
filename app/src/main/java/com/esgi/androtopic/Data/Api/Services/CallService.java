@@ -8,6 +8,7 @@ import com.esgi.androtopic.Data.Api.ServiceResult;
 import com.esgi.androtopic.Data.Model.PostAuth;
 import com.esgi.androtopic.Data.Model.PostNews;
 import com.esgi.androtopic.Data.Model.PostSubscribe;
+import com.esgi.androtopic.Data.Model.PostTopic;
 import com.esgi.androtopic.Data.Model.User;
 import com.esgi.androtopic.Tools.ApiCall;
 import com.esgi.androtopic.Tools.RealmInstance;
@@ -21,7 +22,7 @@ import retrofit2.Response;
  * Created by kevin on 29/06/2017.
  */
 
-public class CallService implements IAuthService, INewsService {
+public class CallService implements IAuthService, INewsService, ITopicService {
 
     static CallService cs = null;
 
@@ -129,6 +130,45 @@ public class CallService implements IAuthService, INewsService {
     }
 
     public void putNews(PostNews pn ,int i, IServiceResultListener<Void> isrl){
+
+    }
+
+    public void postTopic(String token, PostTopic pt, final IServiceResultListener<Void> isrl){
+        ApiCall.getRetrofitInstance().postTopic(token,pt)
+                .enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        ServiceResult<Void> sr = new ServiceResult<Void>();
+                        sr.setResponseCode(response.code());
+                        Log.i("RESPONSE : ", response.message());
+                        Log.i("SUCCESS : ", "Topic is created ! !");
+                        isrl.onResult(sr);
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        ServiceResult<Void> sr = new ServiceResult<Void>();
+                        sr.setException(t);
+                        Log.i("FAILURE : ", "No response from server");
+                        Log.i("CAUSE : ", t.getMessage().toString());
+                        isrl.onResult(sr);
+                    }
+                });
+    }
+
+    public void delTopic(int i, IServiceResultListener<Void> isrl){
+
+    }
+
+    public void getTopics(IServiceResultListener<Void> isrl){
+
+    }
+
+    public void getTopic(int i, IServiceResultListener<Void> isrl){
+
+    }
+
+    public void putTopic(PostTopic pt, IServiceResultListener<Void> isrl){
 
     }
 

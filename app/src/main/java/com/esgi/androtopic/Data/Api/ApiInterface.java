@@ -39,8 +39,8 @@ public interface ApiInterface {
     @POST("/news/{id}/moderate")
     Call<Void> postNews(@Path("id") int id);
 
-    @POST("/topic")
-    Call<Void> postTopic(@Body PostTopic pt);
+    @POST("/topics")
+    Call<Void> postTopic(@Header("Authorization") String token,@Body PostTopic pt);
 
     @POST("/post")
     Call<Void> postPost(@Body PostPost pn);

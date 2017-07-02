@@ -15,4 +15,9 @@ public class PostTopic {
         this.content = content;
         this.date = date;
     }
+
+    public PostTopic(String title, String content){
+        this.title = title;
+        this.content = content;
+    }
 }
