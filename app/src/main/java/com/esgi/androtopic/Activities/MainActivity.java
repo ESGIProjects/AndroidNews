@@ -8,12 +8,17 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.esgi.androtopic.R;
+import com.esgi.androtopic.Tools.AddNews;
 import com.esgi.androtopic.Tools.RealmInstance;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,7 +32,8 @@ public class MainActivity extends FragmentActivity {
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView title;
     @OnClick(R.id.fab) void action(){
-        Toast.makeText(getApplicationContext(),"test",Toast.LENGTH_SHORT).show();
+        AddNews an = new AddNews(this);
+        an.show();
     }
     @OnClick(R.id.signout) void signout(){
         AlertDialog.Builder ad = new AlertDialog.Builder(this);

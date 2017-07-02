@@ -19,7 +19,6 @@ import io.realm.RealmResults;
 public class SplashScreenActivity extends Activity {
 
     private static int TIMER = 2500;
-    private Realm realm;
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -29,8 +28,7 @@ public class SplashScreenActivity extends Activity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                realm = RealmInstance.getRealmInstance(getApplicationContext());
-                RealmResults<User> result = realm.where(User.class)
+                RealmResults<User> result = RealmInstance.getRealmInstance(getApplicationContext()).where(User.class)
                         .findAll();
                 if(result.isEmpty()){
                     Intent i = new Intent(SplashScreenActivity.this, LoginActivity.class);

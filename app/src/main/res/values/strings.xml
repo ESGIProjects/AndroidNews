@@ -4,9 +4,13 @@
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
+    <string name="prompt_title">Title</string>
+    <string name="prompt_content">Content</string>
+    <string name="prompt_date">Date (not mandatory)</string>
     <string name="login">Login</string>
     <string name="sign_in">No account yet ? Create one !</string>
     <string name="create_account">Create account</string>
+    <string name="create_news">Create news</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>

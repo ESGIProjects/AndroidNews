@@ -9,7 +9,7 @@ import com.esgi.androtopic.Data.Model.PostNews;
 
 public interface INewsService {
 
-    void postNews(PostNews pn, IServiceResultListener<Void> isrl);
+    void postNews(String token ,PostNews pn, IServiceResultListener<Void> isrl);
 
     void postNews(int i, IServiceResultListener<Void> isrl);
 

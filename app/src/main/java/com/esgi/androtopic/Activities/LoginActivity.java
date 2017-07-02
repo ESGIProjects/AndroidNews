@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     @OnClick(R.id.login) void login(){
         if (InternetDetection.isAvailable(getApplicationContext())) {
             if(CheckRules.isEmailValid(email.getText().toString()) && CheckRules.isPasswordValid(pwd.getText().toString())){
-                pd = new ProgressDialog(this,ProgressDialog.STYLE_SPINNER);
+                pd = new ProgressDialog(this,R.style.AppCompatAlertDialogStyle);
                 pd.setMessage("Wait...");
                 pd.show();
                 final PostAuth pa = new PostAuth(email.getText().toString(),pwd.getText().toString());
@@ -48,16 +48,12 @@ public class LoginActivity extends AppCompatActivity {
                             overridePendingTransition(R.animator.slide_from_right, R.animator.slide_to_left);
                         }
                         else if(sr.getResponseCode() != 0){
-                            System.out.println(sr.getResponseCode());
                             Toast.makeText(getApplicationContext(),"Retry after !",Toast.LENGTH_SHORT).show();
-                            email.getText().clear();
-                            pwd.getText().clear();
+                            clearFields();
                         }
                         else{
-                            System.out.println(sr.getResponseCode());
                             Toast.makeText(getApplicationContext(),"No response from server !",Toast.LENGTH_SHORT).show();
-                            email.getText().clear();
-                            pwd.getText().clear();
+                            clearFields();
                         }
                     }
                 });
@@ -65,8 +61,7 @@ public class LoginActivity extends AppCompatActivity {
             }
             else{
                 Toast.makeText(getApplicationContext(), "Error !", Toast.LENGTH_SHORT).show();
-                email.getText().clear();
-                pwd.getText().clear();
+                clearFields();
             }
         } else {
             Toast.makeText(getApplicationContext(),"There is no connection !",Toast.LENGTH_SHORT).show();
@@ -87,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void realmQuery(final String email, final String password, final String token) {
-        pd = new ProgressDialog(this, ProgressDialog.STYLE_SPINNER);
+        pd = new ProgressDialog(this, R.style.AppCompatAlertDialogStyle);
         pd.setMessage("Update database...");
         pd.show();
         realm = RealmInstance.getRealmInstance(getApplicationContext());
@@ -108,5 +103,9 @@ public class LoginActivity extends AppCompatActivity {
     public void onBackPressed() {
         finishAffinity();
     }
-}
 
+    public void clearFields(){
+        CheckRules.clearField(email);
+        CheckRules.clearField(pwd);
+    }
+}

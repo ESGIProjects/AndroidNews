@@ -11,6 +11,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -33,7 +34,7 @@ public interface ApiInterface {
     Call<Void> postComments(@Body PostComment pc);
 
     @POST("/news")
-    Call<Void> postNews(@Body PostNews pn);
+    Call<Void> postNews(@Header("Authorization") String token, @Body PostNews pn);
 
     @POST("/news/{id}/moderate")
     Call<Void> postNews(@Path("id") int id);
