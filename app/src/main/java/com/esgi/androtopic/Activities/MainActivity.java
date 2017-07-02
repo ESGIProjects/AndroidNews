@@ -43,7 +43,7 @@ public class MainActivity extends FragmentActivity {
         }
     }
     @OnClick(R.id.signout) void signout(){
-        AlertDialog.Builder ad = new AlertDialog.Builder(this);
+        AlertDialog.Builder ad = new AlertDialog.Builder(this,R.style.AlertDialogCustom);
         ad.setTitle("Sign out")
                 .setMessage("Are you sure you want to sign out ?")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -91,7 +91,7 @@ public class MainActivity extends FragmentActivity {
 
     @Override
     public void onBackPressed() {
-        AlertDialog.Builder ad = new AlertDialog.Builder(this);
+        AlertDialog.Builder ad = new AlertDialog.Builder(this,R.style.AlertDialogCustom);
         ad.setTitle("Quit application")
                 .setMessage("Are you sure you want to quit ?")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
