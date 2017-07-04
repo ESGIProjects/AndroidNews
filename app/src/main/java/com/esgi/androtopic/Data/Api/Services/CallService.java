@@ -3,8 +3,11 @@ package com.esgi.androtopic.Data.Api.Services;
 import android.content.Context;
 import android.util.Log;
 
+import com.esgi.androtopic.Adapter.NewsAdapter;
 import com.esgi.androtopic.Data.Api.IServiceResultListener;
 import com.esgi.androtopic.Data.Api.ServiceResult;
+import com.esgi.androtopic.Data.Model.News;
+import com.esgi.androtopic.Data.Model.NewsList;
 import com.esgi.androtopic.Data.Model.PostAuth;
 import com.esgi.androtopic.Data.Model.PostNews;
 import com.esgi.androtopic.Data.Model.PostSubscribe;
@@ -12,6 +15,8 @@ import com.esgi.androtopic.Data.Model.PostTopic;
 import com.esgi.androtopic.Data.Model.User;
 import com.esgi.androtopic.Tools.ApiCall;
 import com.esgi.androtopic.Tools.RealmInstance;
+
+import java.util.List;
 
 import io.realm.RealmResults;
 import retrofit2.Call;
@@ -42,7 +47,7 @@ public class CallService implements IAuthService, INewsService, ITopicService {
                 result.setResponseCode(response.code());
                 if (result.getResponseCode() == 200) {
                     Log.i("TOKEN : ", response.body());
-                    result.setData(response.body());
+                    result.setSimpleData(response.body());
                     isrl.onResult(result);
                 } else {
                     Log.i("ERROR : ", "Retry after !");
@@ -121,8 +126,28 @@ public class CallService implements IAuthService, INewsService, ITopicService {
 
     }
 
-    public void getNews(IServiceResultListener<Void> isrl){
+    public void getNews(String token, final IServiceResultListener<News> isrl){
+        ApiCall.getRetrofitInstance().getNews(token)
+                .enqueue(new Callback<List<News>>() {
+                    @Override
+                    public void onResponse(Call<List<News>> call, Response<List<News>> response) {
+                        ServiceResult<News> sr = new ServiceResult<News>();
+                        sr.setResponseCode(response.code());
+                        sr.setData(response.body());
+                        Log.i("RESPONSE : ", response.message());
+                        Log.i("SUCCESS : ", "NewsList is created ! !");
+                        isrl.onResult(sr);
+                    }
 
+                    @Override
+                    public void onFailure(Call<List<News>> call, Throwable t) {
+                        ServiceResult<News> sr = new ServiceResult<News>();
+                        sr.setException(t);
+                        Log.i("FAILURE : ", "No response from server");
+                        Log.i("CAUSE : ", t.getMessage().toString());
+                        isrl.onResult(sr);
+                    }
+                });
     }
 
     public void getNews(int i, IServiceResultListener<Void> isrl){

@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
                         pd.dismiss();
                         if(sr.getResponseCode() == 200){
                             Toast.makeText(getApplicationContext(),"Success !",Toast.LENGTH_SHORT).show();
-                            realmQuery(pa.getEmail(), pa.getPassword(),sr.getData());
+                            realmQuery(pa.getEmail(), pa.getPassword(),sr.getSimpleData());
                             Intent i = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(i);
                             overridePendingTransition(R.animator.slide_from_right, R.animator.slide_to_left);

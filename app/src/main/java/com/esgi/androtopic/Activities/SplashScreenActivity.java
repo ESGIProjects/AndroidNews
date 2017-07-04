@@ -19,6 +19,7 @@ import io.realm.RealmResults;
 public class SplashScreenActivity extends Activity {
 
     private static int TIMER = 2500;
+    Intent i;
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -31,17 +32,14 @@ public class SplashScreenActivity extends Activity {
                 RealmResults<User> result = RealmInstance.getRealmInstance(getApplicationContext()).where(User.class)
                         .findAll();
                 if(result.isEmpty()){
-                    Intent i = new Intent(SplashScreenActivity.this, LoginActivity.class);
-                    startActivity(i);
-                    overridePendingTransition(R.animator.slide_from_right, R.animator.slide_to_left);
-                    finish();
+                    i = new Intent(SplashScreenActivity.this, LoginActivity.class);
                 }
                 else{
-                    Intent i = new Intent(SplashScreenActivity.this, MainActivity.class);
-                    startActivity(i);
-                    overridePendingTransition(R.animator.slide_from_right, R.animator.slide_to_left);
-                    finish();
+                    i = new Intent(SplashScreenActivity.this, MainActivity.class);
                 }
+                startActivity(i);
+                overridePendingTransition(R.animator.slide_from_right, R.animator.slide_to_left);
+                finish();
             }
         }, TIMER);
     }

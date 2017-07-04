@@ -1,11 +1,15 @@
 package com.esgi.androtopic.Data.Api;
 
+import com.esgi.androtopic.Data.Model.News;
+import com.esgi.androtopic.Data.Model.NewsList;
 import com.esgi.androtopic.Data.Model.PostAuth;
 import com.esgi.androtopic.Data.Model.PostComment;
 import com.esgi.androtopic.Data.Model.PostNews;
 import com.esgi.androtopic.Data.Model.PostPost;
 import com.esgi.androtopic.Data.Model.PostSubscribe;
 import com.esgi.androtopic.Data.Model.PostTopic;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -68,7 +72,7 @@ public interface ApiInterface {
     Call<Void> getComment(@Path("id") int id);
 
     @GET("/news")
-    Call<Void> getNews();
+    Call<List<News>> getNews(@Header("Authorization") String token);
 
     @GET("/news/{id}")
     Call<Void> getNews(@Path("id") int id);
