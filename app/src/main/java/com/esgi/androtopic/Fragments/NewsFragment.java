@@ -48,6 +48,7 @@ public class NewsFragment extends Fragment {
                 CallService.getInstance().getNews(CallService.getToken(getContext()), new IServiceResultListener<News>() {
                     @Override
                     public void onResult(ServiceResult<News> sr) {
+                        newsList.clear();
                         newsList.addAll(sr.getData());
                         adapter.notifyDataSetChanged();
                         Toast.makeText(getContext(),"List is updated !", Toast.LENGTH_SHORT).show();
