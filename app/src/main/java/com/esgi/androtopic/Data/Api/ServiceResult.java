@@ -9,6 +9,8 @@ import java.util.List;
 public class ServiceResult<T> {
     List<T> data;
     String simpleData;
+    int responseCode;
+    Throwable exception;
 
     public String getSimpleData() {
         return simpleData;
@@ -17,10 +19,6 @@ public class ServiceResult<T> {
     public void setSimpleData(String simpleData) {
         this.simpleData = simpleData;
     }
-
-    int responseCode;
-    Throwable exception;
-
 
     public List<T> getData(){
         return data;

@@ -3,11 +3,9 @@ package com.esgi.androtopic.Data.Api.Services;
 import android.content.Context;
 import android.util.Log;
 
-import com.esgi.androtopic.Adapter.NewsAdapter;
 import com.esgi.androtopic.Data.Api.IServiceResultListener;
 import com.esgi.androtopic.Data.Api.ServiceResult;
 import com.esgi.androtopic.Data.Model.News;
-import com.esgi.androtopic.Data.Model.NewsList;
 import com.esgi.androtopic.Data.Model.PostAuth;
 import com.esgi.androtopic.Data.Model.PostNews;
 import com.esgi.androtopic.Data.Model.PostSubscribe;

@@ -1,7 +1,6 @@
 package com.esgi.androtopic.Data.Api;
 
 import com.esgi.androtopic.Data.Model.News;
-import com.esgi.androtopic.Data.Model.NewsList;
 import com.esgi.androtopic.Data.Model.PostAuth;
 import com.esgi.androtopic.Data.Model.PostComment;
 import com.esgi.androtopic.Data.Model.PostNews;

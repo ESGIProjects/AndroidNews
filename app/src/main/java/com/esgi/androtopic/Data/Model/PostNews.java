@@ -1,7 +1,5 @@
 package com.esgi.androtopic.Data.Model;
 
-import android.support.annotation.Nullable;
-
 /**
  * Created by kevin on 28/06/2017.
  */

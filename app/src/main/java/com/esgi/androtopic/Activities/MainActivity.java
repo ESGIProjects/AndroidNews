@@ -1,27 +1,23 @@
 package com.esgi.androtopic.Activities;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.esgi.androtopic.Dialogs.AddNews;
+import com.esgi.androtopic.Dialogs.AddTopic;
 import com.esgi.androtopic.Fragments.NewsFragment;
 import com.esgi.androtopic.Fragments.TopicsFragment;
 import com.esgi.androtopic.R;
-import com.esgi.androtopic.Tools.AddNews;
-import com.esgi.androtopic.Tools.AddTopic;
 import com.esgi.androtopic.Tools.RealmInstance;
 
 import butterknife.BindView;

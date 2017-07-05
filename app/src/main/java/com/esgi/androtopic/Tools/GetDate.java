@@ -1,7 +1,5 @@
 package com.esgi.androtopic.Tools;
 
-import android.util.Log;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 

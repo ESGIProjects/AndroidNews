@@ -9,7 +9,6 @@ import com.esgi.androtopic.Data.Model.User;
 import com.esgi.androtopic.R;
 import com.esgi.androtopic.Tools.RealmInstance;
 
-import io.realm.Realm;
 import io.realm.RealmResults;
 
 /**

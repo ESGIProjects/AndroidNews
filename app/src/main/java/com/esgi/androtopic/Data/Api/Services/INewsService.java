@@ -1,11 +1,8 @@
 package com.esgi.androtopic.Data.Api.Services;
 
-import com.esgi.androtopic.Adapter.NewsAdapter;
 import com.esgi.androtopic.Data.Api.IServiceResultListener;
 import com.esgi.androtopic.Data.Model.News;
 import com.esgi.androtopic.Data.Model.PostNews;
-
-import java.util.List;
 
 /**
  * Created by kevin on 28/06/2017.

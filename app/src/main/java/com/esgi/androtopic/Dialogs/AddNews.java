@@ -1,4 +1,4 @@
-package com.esgi.androtopic.Tools;
+package com.esgi.androtopic.Dialogs;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -15,6 +15,8 @@ import com.esgi.androtopic.Data.Api.ServiceResult;
 import com.esgi.androtopic.Data.Api.Services.CallService;
 import com.esgi.androtopic.Data.Model.PostNews;
 import com.esgi.androtopic.R;
+import com.esgi.androtopic.Tools.CheckRules;
+import com.esgi.androtopic.Tools.GetDate;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
