@@ -29,15 +29,15 @@ import butterknife.OnClick;
 public class AddTopic extends Dialog {
 
     Activity activity;
-    ProgressDialog pd;
-    @BindView(R.id.title) EditText title;
-    @BindView(R.id.content) EditText content;
-    @BindView(R.id.labelDate) TextView labelDate;
-    @BindView(R.id.date) CheckBox checkDate;
-    @OnClick(R.id.createNews) void createTopic(){
-        pd = new ProgressDialog(getContext(),R.style.AppCompatAlertDialogStyle);
-        pd.setMessage("Wait...");
-        pd.show();
+    ProgressDialog progressDialogTopics;
+    @BindView(R.id.topicsCustomDialogTitle) EditText title;
+    @BindView(R.id.topicsCustomDialogContent) EditText content;
+    @BindView(R.id.topicsCustomDialogLabelDate) TextView labelDate;
+    @BindView(R.id.topicsCustomDialogDate) CheckBox checkDate;
+    @OnClick(R.id.topicsCustomDialogCreateTopics) void createTopic(){
+        progressDialogTopics = new ProgressDialog(getContext(),R.style.AppCompatAlertDialogStyle);
+        progressDialogTopics.setMessage("Wait...");
+        progressDialogTopics.show();
         if((!CheckRules.isNull(title.getText().toString())) && (!CheckRules.isNull(content.getText().toString()))){
             PostTopic pt;
             if(checkDate.isChecked()){
@@ -49,7 +49,7 @@ public class AddTopic extends Dialog {
             CallService.getInstance().postTopic(CallService.getToken(getContext()) ,pt, new IServiceResultListener<Void>() {
                 @Override
                 public void onResult(ServiceResult<Void> sr) {
-                    pd.dismiss();
+                    progressDialogTopics.dismiss();
                     if(sr.getResponseCode() == 201){
                         Toast.makeText(getContext(),"The topic is created !", Toast.LENGTH_SHORT).show();
                     }

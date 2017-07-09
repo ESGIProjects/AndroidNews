@@ -2,6 +2,7 @@ package com.esgi.androtopic.Data.Api.Services;
 
 import com.esgi.androtopic.Data.Api.IServiceResultListener;
 import com.esgi.androtopic.Data.Model.PostTopic;
+import com.esgi.androtopic.Data.Model.Topics;
 
 /**
  * Created by kevin on 28/06/2017.
@@ -13,7 +14,7 @@ public interface ITopicService {
 
     void delTopic(int i, IServiceResultListener<Void> isrl);
 
-    void getTopics(IServiceResultListener<Void> isrl);
+    void getTopics(String token, IServiceResultListener<Topics> isrl);
 
     void getTopic(int i, IServiceResultListener<Void> isrl);
 

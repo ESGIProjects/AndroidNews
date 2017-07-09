@@ -10,6 +10,7 @@ import com.esgi.androtopic.Data.Model.PostAuth;
 import com.esgi.androtopic.Data.Model.PostNews;
 import com.esgi.androtopic.Data.Model.PostSubscribe;
 import com.esgi.androtopic.Data.Model.PostTopic;
+import com.esgi.androtopic.Data.Model.Topics;
 import com.esgi.androtopic.Data.Model.User;
 import com.esgi.androtopic.Tools.ApiCall;
 import com.esgi.androtopic.Tools.RealmInstance;
@@ -183,8 +184,28 @@ public class CallService implements IAuthService, INewsService, ITopicService {
 
     }
 
-    public void getTopics(IServiceResultListener<Void> isrl){
+    public void getTopics(String token, final IServiceResultListener<Topics> isrl){
+        ApiCall.getRetrofitInstance().getTopics(token)
+                .enqueue(new Callback<List<Topics>>() {
+                    @Override
+                    public void onResponse(Call<List<Topics>> call, Response<List<Topics>> response) {
+                        ServiceResult<Topics> sr = new ServiceResult<Topics>();
+                        sr.setResponseCode(response.code());
+                        sr.setData(response.body());
+                        Log.i("RESPONSE : ", response.message());
+                        Log.i("SUCCESS : ", "TopicsList is created ! !");
+                        isrl.onResult(sr);
+                    }
 
+                    @Override
+                    public void onFailure(Call<List<Topics>> call, Throwable t) {
+                        ServiceResult<Topics> sr = new ServiceResult<Topics>();
+                        sr.setException(t);
+                        Log.i("FAILURE : ", "No response from server");
+                        Log.i("CAUSE : ", t.getMessage().toString());
+                        isrl.onResult(sr);
+                    }
+                });
     }
 
     public void getTopic(int i, IServiceResultListener<Void> isrl){

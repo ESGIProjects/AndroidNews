@@ -7,6 +7,7 @@ import com.esgi.androtopic.Data.Model.PostNews;
 import com.esgi.androtopic.Data.Model.PostPost;
 import com.esgi.androtopic.Data.Model.PostSubscribe;
 import com.esgi.androtopic.Data.Model.PostTopic;
+import com.esgi.androtopic.Data.Model.Topics;
 
 import java.util.List;
 
@@ -83,7 +84,7 @@ public interface ApiInterface {
     Call<Void> getPost(@Path("id") int id);
 
     @GET("/topics")
-    Call<Void> getTopics();
+    Call<List<Topics>> getTopics(@Header("Authorization") String token);
 
     @GET("/topics/{id}")
     Call<Void> getTopic(@Path("id") int id);
