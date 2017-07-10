@@ -20,6 +20,6 @@ public interface INewsService {
 
     void getNews(int i, IServiceResultListener<Void> isrl);
 
-    void putNews(PostNews pn ,int i, IServiceResultListener<Void> isrl);
+    void putNews(PostNews pn ,int i, IServiceResultListener<News> isrl);
 
 }

@@ -153,8 +153,27 @@ public class CallService implements IAuthService, INewsService, ITopicService {
 
     }
 
-    public void putNews(PostNews pn ,int i, IServiceResultListener<Void> isrl){
+    public void putNews(PostNews pn ,int i, final IServiceResultListener<News> isrl){
+        ApiCall.getRetrofitInstance().putNews(pn, i)
+                .enqueue(new Callback<News>() {
+                    @Override
+                    public void onResponse(Call<News> call, Response<News> response) {
+                        ServiceResult<News> sr = new ServiceResult<News>();
+                        sr.setResponseCode(response.code());
+                        Log.i("RESPONSE : ", response.message());
+                        Log.i("SUCCESS : ", "News is updated ! !");
+                        isrl.onResult(sr);
+                    }
 
+                    @Override
+                    public void onFailure(Call<News> call, Throwable t) {
+                        ServiceResult<News> sr = new ServiceResult<News>();
+                        sr.setException(t);
+                        Log.i("FAILURE : ", "No response from server");
+                        Log.i("CAUSE : ", t.getMessage().toString());
+                        isrl.onResult(sr);
+                    }
+                });
     }
 
     public void postTopic(String token, PostTopic pt, final IServiceResultListener<Void> isrl){

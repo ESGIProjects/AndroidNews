@@ -2,9 +2,15 @@ package com.esgi.androtopic.Dialogs;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.view.Window;
 
+import com.esgi.androtopic.Activities.MainActivity;
+import com.esgi.androtopic.Data.Model.News;
+import com.esgi.androtopic.Data.Model.Topics;
+import com.esgi.androtopic.Fragments.NewsFragment;
 import com.esgi.androtopic.R;
 
 import butterknife.ButterKnife;
@@ -17,16 +23,35 @@ import butterknife.OnClick;
 public class ActionDialog extends Dialog {
 
     Activity activity;
+    News itemNews;
+    Topics itemTopics;
+    int position;
     @OnClick(R.id.update) void update(){
+        MainActivity a = (MainActivity) activity;
+        if(a.nf.isVisible()){
+            UpdateNews putNews = new UpdateNews(activity, itemNews, position);
+            putNews.show();
+        }
+        else{
 
+        }
     }
     @OnClick(R.id.delete) void delete(){
 
     }
 
-    public ActionDialog(Activity a) {
+    public ActionDialog(Activity a, News item, int position) {
         super(a);
+        this.position = position;
         this.activity = a;
+        this.itemNews = item;
+    }
+
+    public ActionDialog(Activity a, Topics item , int position) {
+        super(a);
+        this.position = position;
+        this.activity = a;
+        this.itemTopics = item;
     }
 
     @Override

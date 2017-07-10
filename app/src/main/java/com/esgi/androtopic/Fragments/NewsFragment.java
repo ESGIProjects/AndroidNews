@@ -70,4 +70,16 @@ public class NewsFragment extends Fragment {
         });
         return v;
     }
+
+    boolean isVisible=false;
+
+    @Override
+    public void setMenuVisibility(boolean menuVisible) {
+        super.setMenuVisibility(menuVisible);
+        isVisible=menuVisible;
+    }
+
+    public boolean isFragmentVisible(){
+        return isVisible;
+    }
 }

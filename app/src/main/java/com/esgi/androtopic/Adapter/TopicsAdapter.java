@@ -74,7 +74,7 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.TopicsView
                 public boolean onLongClick(View v) {
 
                     // TODO : make this dialog allow to update/create a topics
-                    ActionDialog ad = new ActionDialog((Activity)v.getContext());
+                    ActionDialog ad = new ActionDialog((Activity)v.getContext(), topicsList.get(TopicsViewHolder.super.getAdapterPosition()), TopicsViewHolder.super.getAdapterPosition());
                     ad.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     ad.show();
                     return true;

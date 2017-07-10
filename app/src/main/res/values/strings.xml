@@ -11,6 +11,7 @@
     <string name="sign_in">No account yet ? Create one !</string>
     <string name="create_account">Create account</string>
     <string name="create_news">Create news</string>
+    <string name="update_news">Update news</string>
     <string name="create_topic">Create topic</string>
     <string name="update">Update</string>
     <string name="delete">Delete</string>

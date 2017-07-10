@@ -28,8 +28,8 @@ import io.realm.Realm;
 public class MainActivity extends FragmentActivity {
 
     BottomNavigationView bnv;
-    NewsFragment nf = new NewsFragment();
-    TopicsFragment tf = new TopicsFragment();
+    public NewsFragment nf = new NewsFragment();
+    public TopicsFragment tf = new TopicsFragment();
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView title;
@@ -74,9 +74,13 @@ public class MainActivity extends FragmentActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     displayFragment(tf,nf);
+                    nf.setMenuVisibility(false);
+                    nf.setMenuVisibility(true);
                     return true;
                 case R.id.navigation_notifications:
                     displayFragment(nf,tf);
+                    tf.setMenuVisibility(true);
+                    nf.setMenuVisibility(false);
                     return true;
             }
             return false;
@@ -95,6 +99,8 @@ public class MainActivity extends FragmentActivity {
         ft.add(R.id.fragment_container,nf);
         ft.add(R.id.fragment_container,tf);
         ft.show(nf);
+        nf.setMenuVisibility(true);
+        tf.setMenuVisibility(false);
         ft.hide(tf);
         ft.commit();
     }

@@ -95,7 +95,7 @@ public interface ApiInterface {
     Call<Void> putComment(@Body PostComment pc ,@Path("id") int id);
 
     @PUT("/news/{id}")
-    Call<Void> putNews(@Body PostNews pn ,@Path("id") int id);
+    Call<News> putNews(@Body PostNews pn ,@Path("id") int id);
 
     @PUT("/posts/{id}")
     Call<Void> putPost(@Body PostPost pp ,@Path("id") int id);

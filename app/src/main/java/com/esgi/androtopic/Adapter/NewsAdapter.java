@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.esgi.androtopic.Activities.MainActivity;
 import com.esgi.androtopic.Data.Model.News;
 import com.esgi.androtopic.Dialogs.ActionDialog;
 import com.esgi.androtopic.R;
@@ -77,7 +78,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
                 public boolean onLongClick(View v) {
 
                     // TODO : make this dialog allow to update/create a news
-                    ActionDialog ad = new ActionDialog((Activity)v.getContext());
+                    ActionDialog ad = new ActionDialog((MainActivity) v.getContext(), newsList.get(NewsViewHolder.super.getAdapterPosition()), NewsViewHolder.super.getAdapterPosition());
                     ad.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     ad.show();
                     return true;
