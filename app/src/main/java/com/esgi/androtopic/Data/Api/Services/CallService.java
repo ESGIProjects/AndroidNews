@@ -15,6 +15,7 @@ import com.esgi.androtopic.Data.Model.User;
 import com.esgi.androtopic.Tools.ApiCall;
 import com.esgi.androtopic.Tools.RealmInstance;
 
+import java.io.IOException;
 import java.util.List;
 
 import io.realm.RealmResults;
@@ -26,7 +27,7 @@ import retrofit2.Response;
  * Created by kevin on 29/06/2017.
  */
 
-public class CallService implements IAuthService, INewsService, ITopicService {
+public class CallService implements IAuthService, INewsService, ITopicService, IUserService {
 
     static CallService cs = null;
 
@@ -153,21 +154,20 @@ public class CallService implements IAuthService, INewsService, ITopicService {
 
     }
 
-    public void putNews(PostNews pn ,int i, final IServiceResultListener<News> isrl){
-        ApiCall.getRetrofitInstance().putNews(pn, i)
-                .enqueue(new Callback<News>() {
+    public void putNews(String token,PostNews pn ,String id, final IServiceResultListener<Void> isrl){
+        ApiCall.getRetrofitInstance().putNews(token,pn, id)
+                .enqueue(new Callback<Void>() {
                     @Override
-                    public void onResponse(Call<News> call, Response<News> response) {
-                        ServiceResult<News> sr = new ServiceResult<News>();
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        ServiceResult<Void> sr = new ServiceResult<>();
                         sr.setResponseCode(response.code());
                         Log.i("RESPONSE : ", response.message());
-                        Log.i("SUCCESS : ", "News is updated ! !");
                         isrl.onResult(sr);
                     }
 
                     @Override
-                    public void onFailure(Call<News> call, Throwable t) {
-                        ServiceResult<News> sr = new ServiceResult<News>();
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        ServiceResult<Void> sr = new ServiceResult<>();
                         sr.setException(t);
                         Log.i("FAILURE : ", "No response from server");
                         Log.i("CAUSE : ", t.getMessage().toString());
@@ -235,8 +235,36 @@ public class CallService implements IAuthService, INewsService, ITopicService {
 
     }
 
+
+    public void getUser(String token,final IServiceResultListener<User> isrl){
+        ApiCall.getRetrofitInstance().getUser(token).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                ServiceResult<User> sr = new ServiceResult<User>();
+                sr.setResponseCode(response.code());
+                sr.setUser(response.body());
+                Log.i("RESPONSE : ", response.message());
+                isrl.onResult(sr);
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                ServiceResult<User> sr = new ServiceResult<User>();
+                sr.setException(t);
+                Log.i("FAILURE : ", "No response from server");
+                Log.i("CAUSE : ", t.getMessage().toString());
+                isrl.onResult(sr);
+            }
+        });
+    }
+
     public static String getToken(Context context){
         RealmResults<User> result = RealmInstance.getRealmInstance(context).where(User.class).findAll();
         return "Bearer " + result.get(0).getToken();
+    }
+
+    public static String getID(Context context){
+        RealmResults<User> result = RealmInstance.getRealmInstance(context).where(User.class).findAll();
+        return result.get(0).getId();
     }
 }

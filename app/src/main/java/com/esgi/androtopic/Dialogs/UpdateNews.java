@@ -6,6 +6,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.telecom.Call;
+import android.util.Log;
 import android.view.Window;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -36,8 +38,7 @@ public class UpdateNews extends Dialog {
     ProgressDialog pd;
     @BindView(R.id.customDialogNewsUpdateTitle) EditText title;
     @BindView(R.id.customDialogNewsUpdateContent) EditText content;
-    @BindView(R.id.customDialogNewsUpdateLabelDate)
-    TextView labelDate;
+    @BindView(R.id.customDialogNewsUpdateLabelDate) TextView labelDate;
     @BindView(R.id.customDialogNewsUpdateDate)
     CheckBox checkDate;
 
@@ -55,18 +56,23 @@ public class UpdateNews extends Dialog {
             }
             itemNews.setContent(content.getText().toString());
             itemNews.setTitle(title.getText().toString());
-            String test = itemNews.get_id();
-            //TODO pourquoi ce putain d'id de merde est comme ça ?? test = 5952725bc5606700114a19b8
-            CallService.getInstance().putNews(pn, this.position, new IServiceResultListener<News>() {
+            CallService.getInstance().putNews(CallService.getToken(getContext()),pn, itemNews.get_id(), new IServiceResultListener<Void>() {
                 @Override
-                public void onResult(ServiceResult<News> sr) {
-                    pd.dismiss();
-
-                    if (sr.getResponseCode() == 200 || sr.getResponseCode() == 204) {
+                public void onResult(ServiceResult<Void> sr) {
+                    Log.i("RESPONSE : ", "" +sr.getResponseCode());
+                    Log.i("AUTHOR : ", "" + itemNews.getAuthor());
+                    Log.i("ID : ", "" +CallService.getID(getContext()));
+                    Log.i("ITEM ID : ", "" + itemNews.get_id());
+                    if (sr.getResponseCode() == 204 && itemNews.getAuthor().equals(CallService.getID(getContext()))) {
                         Toast.makeText(getContext(), "The news is update !", Toast.LENGTH_SHORT).show();
-                    } else {
+                    }
+                    else if(itemNews.getAuthor() != CallService.getID(getContext())){
+                        Toast.makeText(getContext(), "You can't change a topic which is not yours !", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
                         Toast.makeText(getContext(), "No response from server !", Toast.LENGTH_SHORT).show();
                     }
+                    pd.dismiss();
                     dismiss();
                 }
             });

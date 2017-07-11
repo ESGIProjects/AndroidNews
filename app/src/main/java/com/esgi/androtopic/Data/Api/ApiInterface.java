@@ -8,6 +8,7 @@ import com.esgi.androtopic.Data.Model.PostPost;
 import com.esgi.androtopic.Data.Model.PostSubscribe;
 import com.esgi.androtopic.Data.Model.PostTopic;
 import com.esgi.androtopic.Data.Model.Topics;
+import com.esgi.androtopic.Data.Model.User;
 
 import java.util.List;
 
@@ -89,13 +90,16 @@ public interface ApiInterface {
     @GET("/topics/{id}")
     Call<Void> getTopic(@Path("id") int id);
 
+    @GET("/users/me")
+    Call<User> getUser(@Header("Authorization") String token);
+
     // PUT ENDPOINTS
 
     @PUT("/comments/{id}")
     Call<Void> putComment(@Body PostComment pc ,@Path("id") int id);
 
     @PUT("/news/{id}")
-    Call<News> putNews(@Body PostNews pn ,@Path("id") int id);
+    Call<Void> putNews(@Header("Authorization") String token,@Body PostNews pn ,@Path("id") String id);
 
     @PUT("/posts/{id}")
     Call<Void> putPost(@Body PostPost pp ,@Path("id") int id);

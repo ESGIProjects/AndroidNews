@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -13,6 +14,7 @@ import com.esgi.androtopic.Data.Api.Services.CallService;
 import com.esgi.androtopic.Data.Model.PostAuth;
 import com.esgi.androtopic.Data.Model.User;
 import com.esgi.androtopic.R;
+import com.esgi.androtopic.Tools.ApiCall;
 import com.esgi.androtopic.Tools.CheckRules;
 import com.esgi.androtopic.Tools.InternetDetection;
 import com.esgi.androtopic.Tools.RealmInstance;
@@ -27,6 +29,8 @@ public class LoginActivity extends AppCompatActivity {
     ProgressDialog pd;
     User user;
     Realm realm;
+    String _id ,firstname, lastname, mail, password, token;
+
     @BindView(R.id.email) EditText email;
     @BindView(R.id.password) EditText pwd;
     @OnClick(R.id.login) void login(){
@@ -42,7 +46,10 @@ public class LoginActivity extends AppCompatActivity {
                         pd.dismiss();
                         if(sr.getResponseCode() == 200){
                             Toast.makeText(getApplicationContext(),"Success !",Toast.LENGTH_SHORT).show();
-                            realmQuery(pa.getEmail(), pa.getPassword(),sr.getSimpleData());
+                            mail = pa.getEmail();
+                            password = pa.getPassword();
+                            token = sr.getSimpleData();
+                            nextQuery();
                             Intent i = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(i);
                             overridePendingTransition(R.animator.slide_from_right, R.animator.slide_to_left);
@@ -81,20 +88,39 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    public void realmQuery(final String email, final String password, final String token) {
+    public void nextQuery() {
         pd = new ProgressDialog(this, R.style.AppCompatAlertDialogStyle);
         pd.setMessage("Update database...");
         pd.show();
+        CallService.getInstance().getUser("Bearer " + token, new IServiceResultListener<User>() {
+            @Override
+            public void onResult(ServiceResult<User> sr) {
+                if (sr.getResponseCode() == 200) {
+                    Toast.makeText(getApplicationContext(), "Success !", Toast.LENGTH_SHORT).show();
+                    _id = sr.getUser().getId();
+                    firstname = sr.getUser().getFirstname();
+                    lastname = sr.getUser().getLastname();
+                    realmQuery();
+                    pd.dismiss();
+                }
+            }
+        });
+    }
+
+    public void realmQuery(){
+
         realm = RealmInstance.getRealmInstance(getApplicationContext());
 
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm bgRealm) {
                 user = realm.createObject(User.class);
-                user.setEmail(email);
+                user.setId(_id);
+                user.setFirstname(firstname);
+                user.setLastname(lastname);
+                user.setEmail(mail);
                 user.setPassword(password);
                 user.setToken(token);
-                pd.dismiss();
             }
         });
     }

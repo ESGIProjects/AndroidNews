@@ -1,5 +1,7 @@
 package com.esgi.androtopic.Data.Api;
 
+import com.esgi.androtopic.Data.Model.User;
+
 import java.util.List;
 
 /**
@@ -9,8 +11,17 @@ import java.util.List;
 public class ServiceResult<T> {
     List<T> data;
     String simpleData;
+    User user;
     int responseCode;
     Throwable exception;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public String getSimpleData() {
         return simpleData;

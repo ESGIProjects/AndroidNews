@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Window;
 
@@ -30,6 +32,7 @@ public class ActionDialog extends Dialog {
         MainActivity a = (MainActivity) activity;
         if(a.nf.isVisible()){
             UpdateNews putNews = new UpdateNews(activity, itemNews, position);
+            putNews.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             putNews.show();
         }
         else{
