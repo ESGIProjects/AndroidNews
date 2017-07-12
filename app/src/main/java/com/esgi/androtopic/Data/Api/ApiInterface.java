@@ -56,13 +56,13 @@ public interface ApiInterface {
     Call<Void> delComment(@Path("id") int id);
 
     @DELETE("/news/{id}")
-    Call<Void> delNews(@Path("id") int id);
+    Call<Void> delNews(@Header("Authorization") String token, @Path("id") String id);
 
     @DELETE("/posts/{id}")
     Call<Void> delPost(@Path("id") int id);
 
     @DELETE("/topics/{id}")
-    Call<Void> delTopic(@Path("id") int id);
+    Call<Void> delTopic(@Header("Authorization") String token, @Path("id") String id);
 
     //GET ENDPOINTS
 
@@ -105,6 +105,6 @@ public interface ApiInterface {
     Call<Void> putPost(@Body PostPost pp ,@Path("id") int id);
 
     @PUT("/topics/{id}")
-    Call<Void> putTopic(@Body PostTopic pc ,@Path("id") int id);
+    Call<Void> putTopic(@Header("Authorization") String token,@Body PostTopic pn ,@Path("id") String id);
 
 }

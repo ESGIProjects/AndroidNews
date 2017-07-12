@@ -122,8 +122,26 @@ public class CallService implements IAuthService, INewsService, ITopicService, I
 
     }
 
-    public void delNews(int i, IServiceResultListener<Void> isrl){
+    public void delNews(String token,String id, final IServiceResultListener<Void> isrl){
+        ApiCall.getRetrofitInstance().delNews(token, id)
+                .enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        ServiceResult<Void> sr = new ServiceResult<>();
+                        sr.setResponseCode(response.code());
+                        Log.i("RESPONSE : ", response.message());
+                        isrl.onResult(sr);
+                    }
 
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        ServiceResult<Void> sr = new ServiceResult<>();
+                        sr.setException(t);
+                        Log.i("FAILURE : ", "No response from server");
+                        Log.i("CAUSE : ", t.getMessage().toString());
+                        isrl.onResult(sr);
+                    }
+                });
     }
 
     public void getNews(String token, final IServiceResultListener<News> isrl){
@@ -199,8 +217,26 @@ public class CallService implements IAuthService, INewsService, ITopicService, I
                 });
     }
 
-    public void delTopic(int i, IServiceResultListener<Void> isrl){
+    public void delTopic(String token,String id, final IServiceResultListener<Void> isrl){
+        ApiCall.getRetrofitInstance().delTopic(token, id)
+                .enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        ServiceResult<Void> sr = new ServiceResult<>();
+                        sr.setResponseCode(response.code());
+                        Log.i("RESPONSE : ", response.message());
+                        isrl.onResult(sr);
+                    }
 
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        ServiceResult<Void> sr = new ServiceResult<>();
+                        sr.setException(t);
+                        Log.i("FAILURE : ", "No response from server");
+                        Log.i("CAUSE : ", t.getMessage().toString());
+                        isrl.onResult(sr);
+                    }
+                });
     }
 
     public void getTopics(String token, final IServiceResultListener<Topics> isrl){
@@ -231,8 +267,26 @@ public class CallService implements IAuthService, INewsService, ITopicService, I
 
     }
 
-    public void putTopic(PostTopic pt, IServiceResultListener<Void> isrl){
+    public void putTopic(String token,PostTopic pn ,String id, final IServiceResultListener<Void> isrl) {
+        ApiCall.getRetrofitInstance().putTopic(token, pn, id)
+                .enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        ServiceResult<Void> sr = new ServiceResult<>();
+                        sr.setResponseCode(response.code());
+                        Log.i("RESPONSE : ", response.message());
+                        isrl.onResult(sr);
+                    }
 
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        ServiceResult<Void> sr = new ServiceResult<>();
+                        sr.setException(t);
+                        Log.i("FAILURE : ", "No response from server");
+                        Log.i("CAUSE : ", t.getMessage().toString());
+                        isrl.onResult(sr);
+                    }
+                });
     }
 
 

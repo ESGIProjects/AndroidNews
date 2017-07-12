@@ -36,11 +36,23 @@ public class ActionDialog extends Dialog {
             putNews.show();
         }
         else{
-
+            UpdateTopics putTopics = new UpdateTopics(activity, itemTopics, position);
+            putTopics.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            putTopics.show();
         }
     }
     @OnClick(R.id.delete) void delete(){
-
+        MainActivity a = (MainActivity) activity;
+        if(a.nf.isVisible()){
+            DeleteNews deleteNews = new DeleteNews(activity, itemNews, position);
+            deleteNews.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            deleteNews.show();
+        }
+        else{
+            DeleteTopic deleteTopic = new DeleteTopic(activity, itemTopics, position);
+            deleteTopic.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            deleteTopic.show();
+        }
     }
 
     public ActionDialog(Activity a, News item, int position) {

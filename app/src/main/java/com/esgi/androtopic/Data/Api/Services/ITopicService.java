@@ -12,12 +12,12 @@ public interface ITopicService {
 
     void postTopic(String token, PostTopic pt, IServiceResultListener<Void> isrl);
 
-    void delTopic(int i, IServiceResultListener<Void> isrl);
+    void delTopic(String token, String id, IServiceResultListener<Void> isrl);
 
     void getTopics(String token, IServiceResultListener<Topics> isrl);
 
     void getTopic(int i, IServiceResultListener<Void> isrl);
 
-    void putTopic(PostTopic pt, IServiceResultListener<Void> isrl);
+    void putTopic(String token,PostTopic pn ,String id, IServiceResultListener<Void> isrl);
 
 }

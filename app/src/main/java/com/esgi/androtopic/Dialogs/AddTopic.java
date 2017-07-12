@@ -60,6 +60,10 @@ public class AddTopic extends Dialog {
                 }
             });
         }
+        else{
+            Toast.makeText(getContext(),"Title and Content are required ! ", Toast.LENGTH_SHORT).show();
+            progressDialogTopics.dismiss();
+        }
     }
 
     public AddTopic(Activity a) {

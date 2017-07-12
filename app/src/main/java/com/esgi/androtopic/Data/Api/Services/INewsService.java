@@ -14,7 +14,7 @@ public interface INewsService {
 
     void postNews(int i, IServiceResultListener<Void> isrl);
 
-    void delNews(int i, IServiceResultListener<Void> isrl);
+    void delNews(String token, String id, IServiceResultListener<Void> isrl);
 
     void getNews(String token, IServiceResultListener<News> isrl);
 

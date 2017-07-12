@@ -60,6 +60,10 @@ public class AddNews extends Dialog {
                 }
             });
         }
+        else{
+            Toast.makeText(getContext(),"Title and Content are required ! ", Toast.LENGTH_SHORT).show();
+            pd.dismiss();
+        }
     }
 
     public AddNews(Activity a) {
