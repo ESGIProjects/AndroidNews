@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.esgi.androtopic.Activities.MainActivity;
 import com.esgi.androtopic.Data.Api.IServiceResultListener;
 import com.esgi.androtopic.Data.Api.ServiceResult;
 import com.esgi.androtopic.Data.Api.Services.CallService;
@@ -36,6 +37,8 @@ public class UpdateNews extends Dialog {
     News itemNews;
     int position;
     ProgressDialog pd;
+    ActionDialog act;
+
     @BindView(R.id.customDialogNewsUpdateTitle) EditText title;
     @BindView(R.id.customDialogNewsUpdateContent) EditText content;
     @BindView(R.id.customDialogNewsUpdateLabelDate) TextView labelDate;
@@ -74,6 +77,11 @@ public class UpdateNews extends Dialog {
                     }
                     pd.dismiss();
                     dismiss();
+
+                    act.dismiss();
+
+                    MainActivity aa = (MainActivity) activity;
+                    aa.nf.refresh(position);
                 }
             });
         }
@@ -83,11 +91,12 @@ public class UpdateNews extends Dialog {
         }
     }
 
-    public UpdateNews(Activity a, News item, int position ) {
+    public UpdateNews(Activity a, News item, int position, ActionDialog actionDialog) {
         super(a);
         this.activity = a;
         this.position = position;
         this.itemNews = item;
+        this.act = actionDialog;
     }
 
     @Override

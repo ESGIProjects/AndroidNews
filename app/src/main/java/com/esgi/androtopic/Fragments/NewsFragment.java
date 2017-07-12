@@ -29,16 +29,17 @@ public class NewsFragment extends Fragment {
 
     ProgressDialog pd;
     RecyclerView recyclerView;
-    NewsAdapter adapter;
+    public NewsAdapter adapter;
     List<News> newsList = new ArrayList<>();
     SwipeRefreshLayout srl;
+    View v;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         pd = new ProgressDialog(getContext(),R.style.AppCompatAlertDialogStyle);
         pd.setMessage("Wait...");
         pd.show();
-        View v = inflater.inflate(R.layout.fragment_news, container, false);
+        v = inflater.inflate(R.layout.fragment_news, container, false);
         recyclerView = (RecyclerView) v.findViewById(R.id.newsList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         srl = (SwipeRefreshLayout) v.findViewById(R.id.refresh);
@@ -77,6 +78,37 @@ public class NewsFragment extends Fragment {
     public void setMenuVisibility(boolean menuVisible) {
         super.setMenuVisibility(menuVisible);
         isVisible=menuVisible;
+    }
+
+    public void refresh(final int itemPosition){
+        this.newsList.clear();
+        this.adapter.notifyDataSetChanged();
+        this.srl.setRefreshing(true);
+
+        CallService.getInstance().getNews(CallService.getToken(getContext()), new IServiceResultListener<News>() {
+            @Override
+            public void onResult(ServiceResult<News> sr) {
+                newsList.clear();
+                newsList.addAll(sr.getData());
+                adapter.notifyDataSetChanged();
+                Toast.makeText(getContext(),"List is updated !", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+                srl.setRefreshing(false);
+
+        adapter = new NewsAdapter(newsList, R.layout.news_card,getContext());
+        recyclerView.setAdapter(adapter);
+        CallService.getInstance().getNews(CallService.getToken(getContext()), new IServiceResultListener<News>() {
+            @Override
+            public void onResult(ServiceResult<News> sr) {
+                newsList.addAll(sr.getData());
+                adapter.notifyDataSetChanged();
+                pd.dismiss();
+                //TODO Duplication de la listview
+                recyclerView.smoothScrollToPosition(itemPosition -1);
+            }
+        });
     }
 
     public boolean isFragmentVisible(){

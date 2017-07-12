@@ -6,6 +6,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
 import android.telecom.Call;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +18,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.esgi.androtopic.Activities.MainActivity;
+import com.esgi.androtopic.Adapter.NewsAdapter;
 import com.esgi.androtopic.Data.Api.IServiceResultListener;
 import com.esgi.androtopic.Data.Api.ServiceResult;
 import com.esgi.androtopic.Data.Api.Services.CallService;
@@ -39,6 +43,7 @@ public class DeleteNews extends Dialog {
     News itemNews;
     int position;
     ProgressDialog pd;
+    ActionDialog act;
 
     @OnClick(R.id.deleteNews) void deleteNews(){
         pd = new ProgressDialog(getContext(), R.style.AppCompatAlertDialogStyle);
@@ -62,18 +67,24 @@ public class DeleteNews extends Dialog {
                     }
                     pd.dismiss();
                     dismiss();
+                    act.dismiss();
+
+                    MainActivity aa = (MainActivity) activity;
+                    aa.nf.refresh(position);
                 }
             });
+
     }
     @OnClick(R.id.returnNews) void returnNews(){
             dismiss();
             }
 
-    public DeleteNews(Activity a, News item, int position ) {
+    public DeleteNews(Activity a, News item, int position, ActionDialog actionDialog) {
         super(a);
         this.activity = a;
         this.position = position;
         this.itemNews = item;
+        this.act = actionDialog;
     }
 
     @Override

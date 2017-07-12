@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.esgi.androtopic.Activities.MainActivity;
 import com.esgi.androtopic.Data.Api.IServiceResultListener;
 import com.esgi.androtopic.Data.Api.ServiceResult;
 import com.esgi.androtopic.Data.Api.Services.CallService;
@@ -37,6 +38,8 @@ public class UpdateTopics extends Dialog {
     Topics itemTopics;
     int position;
     ProgressDialog pd;
+    ActionDialog act;
+
     @BindView(R.id.customDialogTopicsUpdateTitle) EditText title;
     @BindView(R.id.customDialogTopicsUpdateContent) EditText content;
     @BindView(R.id.customDialogTopicsUpdateLabelDate) TextView labelDate;
@@ -75,6 +78,11 @@ public class UpdateTopics extends Dialog {
                     }
                     pd.dismiss();
                     dismiss();
+
+                    act.dismiss();
+
+                    MainActivity aa = (MainActivity) activity;
+                    aa.nf.refresh(position);
                 }
             });
         }
@@ -84,11 +92,12 @@ public class UpdateTopics extends Dialog {
         }
     }
 
-    public UpdateTopics(Activity a, Topics item, int position ) {
+    public UpdateTopics(Activity a, Topics item, int position, ActionDialog actionDialog) {
         super(a);
         this.activity = a;
         this.position = position;
         this.itemTopics = item;
+        this.act = actionDialog;
     }
 
     @Override

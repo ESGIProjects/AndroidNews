@@ -28,15 +28,16 @@ public class ActionDialog extends Dialog {
     News itemNews;
     Topics itemTopics;
     int position;
+    public ActionDialog actionDialog;
     @OnClick(R.id.update) void update(){
         MainActivity a = (MainActivity) activity;
         if(a.nf.isVisible()){
-            UpdateNews putNews = new UpdateNews(activity, itemNews, position);
+            UpdateNews putNews = new UpdateNews(activity, itemNews, position, actionDialog);
             putNews.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             putNews.show();
         }
         else{
-            UpdateTopics putTopics = new UpdateTopics(activity, itemTopics, position);
+            UpdateTopics putTopics = new UpdateTopics(activity, itemTopics, position, actionDialog);
             putTopics.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             putTopics.show();
         }
@@ -44,12 +45,12 @@ public class ActionDialog extends Dialog {
     @OnClick(R.id.delete) void delete(){
         MainActivity a = (MainActivity) activity;
         if(a.nf.isVisible()){
-            DeleteNews deleteNews = new DeleteNews(activity, itemNews, position);
+            DeleteNews deleteNews = new DeleteNews(activity, itemNews, position, actionDialog);
             deleteNews.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             deleteNews.show();
         }
         else{
-            DeleteTopic deleteTopic = new DeleteTopic(activity, itemTopics, position);
+            DeleteTopic deleteTopic = new DeleteTopic(activity, itemTopics, position, actionDialog);
             deleteTopic.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             deleteTopic.show();
         }
@@ -60,6 +61,7 @@ public class ActionDialog extends Dialog {
         this.position = position;
         this.activity = a;
         this.itemNews = item;
+        this.actionDialog = this;
     }
 
     public ActionDialog(Activity a, Topics item , int position) {
@@ -75,5 +77,9 @@ public class ActionDialog extends Dialog {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.custom_dialog_action);
         ButterKnife.bind(this);
+    }
+
+    public void Notify(){
+        this.dismiss();
     }
 }
