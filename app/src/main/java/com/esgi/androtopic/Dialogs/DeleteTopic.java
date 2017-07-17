@@ -67,7 +67,7 @@ public class DeleteTopic extends Dialog {
                 act.dismiss();
 
                 MainActivity aa = (MainActivity) activity;
-                aa.nf.refresh(position);
+                aa.tf.refresh(position);
             }
         });
     }

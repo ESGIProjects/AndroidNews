@@ -60,8 +60,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
     public class NewsViewHolder extends RecyclerView.ViewHolder {
 
-        // Don't bind this with butterknife, it's not functional yet
-
         CardView cv;
         TextView title;
         TextView content;
@@ -77,7 +75,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
                 @Override
                 public boolean onLongClick(View v) {
 
-                    // TODO : make this dialog allow to update/create a news
                     ActionDialog ad = new ActionDialog((MainActivity) v.getContext(), newsList.get(NewsViewHolder.super.getAdapterPosition()), NewsViewHolder.super.getAdapterPosition());
                     ad.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     ad.show();

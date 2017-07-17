@@ -69,6 +69,7 @@ public class ActionDialog extends Dialog {
         this.position = position;
         this.activity = a;
         this.itemTopics = item;
+        this.actionDialog = this;
     }
 
     @Override

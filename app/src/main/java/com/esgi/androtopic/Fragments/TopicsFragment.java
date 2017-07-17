@@ -25,25 +25,28 @@ import com.esgi.androtopic.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.esgi.androtopic.R.id.newsList;
+import static com.esgi.androtopic.R.id.top;
+
 /**
  * Created by kevin on 03/07/2017.
  */
 
 public class TopicsFragment extends Fragment {
 
-    ProgressDialog topicsProgressDialog;
-    RecyclerView topicsRecyclerView;
+    ProgressDialog pd;
+    RecyclerView recyclerView;
     TopicsAdapter adapter;
     List<Topics> topicsList = new ArrayList<>();
     SwipeRefreshLayout srl;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        topicsProgressDialog = new ProgressDialog(getContext(),R.style.AppCompatAlertDialogStyle);
-        topicsProgressDialog.setMessage("Wait...");
-        topicsProgressDialog.show();
+        pd = new ProgressDialog(getContext(),R.style.AppCompatAlertDialogStyle);
+        pd.setMessage("Wait...");
+        pd.show();
         View v = inflater.inflate(R.layout.fragment_topics, container, false);
-        topicsRecyclerView = (RecyclerView) v.findViewById(R.id.topicsList);
-        topicsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView = (RecyclerView) v.findViewById(R.id.topicsList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         srl = (SwipeRefreshLayout) v.findViewById(R.id.refreshTopics);
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -62,16 +65,39 @@ public class TopicsFragment extends Fragment {
         });
 
         adapter = new TopicsAdapter(topicsList, R.layout.topics_card,getContext());
-        topicsRecyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
         CallService.getInstance().getTopics(CallService.getToken(getContext()), new IServiceResultListener<Topics>() {
             @Override
             public void onResult(ServiceResult<Topics> sr) {
                 topicsList.addAll(sr.getData());
                 adapter.notifyDataSetChanged();
-                topicsProgressDialog.dismiss();
+                pd.dismiss();
             }
         });
         return v;
+    }
+
+    boolean isVisible=false;
+
+    @Override
+    public void setMenuVisibility(boolean menuVisible) {
+        super.setMenuVisibility(menuVisible);
+        isVisible=menuVisible;
+    }
+
+    public void refresh(final int itemPosition){
+        adapter = new TopicsAdapter(topicsList, R.layout.topics_card,getContext());
+        recyclerView.setAdapter(adapter);
+        CallService.getInstance().getTopics(CallService.getToken(getContext()), new IServiceResultListener<Topics>() {
+            @Override
+            public void onResult(ServiceResult<Topics> sr) {
+                topicsList.clear();
+                topicsList.addAll(sr.getData());
+                adapter.notifyDataSetChanged();
+                pd.dismiss();
+                recyclerView.smoothScrollToPosition(itemPosition -1);
+            }
+        });
     }
 
 }

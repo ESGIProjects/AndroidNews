@@ -29,7 +29,7 @@ public class NewsFragment extends Fragment {
 
     ProgressDialog pd;
     RecyclerView recyclerView;
-    public NewsAdapter adapter;
+    NewsAdapter adapter;
     List<News> newsList = new ArrayList<>();
     SwipeRefreshLayout srl;
     View v;
@@ -81,31 +81,15 @@ public class NewsFragment extends Fragment {
     }
 
     public void refresh(final int itemPosition){
-        this.newsList.clear();
-        this.adapter.notifyDataSetChanged();
-        this.srl.setRefreshing(true);
-
+        adapter = new NewsAdapter(newsList, R.layout.news_card,getContext());
+        recyclerView.setAdapter(adapter);
         CallService.getInstance().getNews(CallService.getToken(getContext()), new IServiceResultListener<News>() {
             @Override
             public void onResult(ServiceResult<News> sr) {
                 newsList.clear();
                 newsList.addAll(sr.getData());
                 adapter.notifyDataSetChanged();
-                Toast.makeText(getContext(),"List is updated !", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-                srl.setRefreshing(false);
-
-        adapter = new NewsAdapter(newsList, R.layout.news_card,getContext());
-        recyclerView.setAdapter(adapter);
-        CallService.getInstance().getNews(CallService.getToken(getContext()), new IServiceResultListener<News>() {
-            @Override
-            public void onResult(ServiceResult<News> sr) {
-                newsList.addAll(sr.getData());
-                adapter.notifyDataSetChanged();
                 pd.dismiss();
-                //TODO Duplication de la listview
                 recyclerView.smoothScrollToPosition(itemPosition -1);
             }
         });

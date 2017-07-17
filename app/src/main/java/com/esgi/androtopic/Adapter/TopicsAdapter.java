@@ -40,7 +40,6 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.TopicsView
 
     @Override
     public void onBindViewHolder(TopicsAdapter.TopicsViewHolder holder, final int position) {
-        // TODO : complete the cardview model
         holder.title.setText(topicsList.get(position).getTitle());
         holder.content.setText(topicsList.get(position).getContent());
     }
@@ -55,8 +54,6 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.TopicsView
         super.onAttachedToRecyclerView(recyclerView);
     }
     public class TopicsViewHolder extends RecyclerView.ViewHolder {
-
-        // Don't bind this with butterknife, it's not functional yet
 
         CardView cv;
         TextView title;
@@ -73,7 +70,6 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.TopicsView
                 @Override
                 public boolean onLongClick(View v) {
 
-                    // TODO : make this dialog allow to update/create a topics
                     ActionDialog ad = new ActionDialog((Activity)v.getContext(), topicsList.get(TopicsViewHolder.super.getAdapterPosition()), TopicsViewHolder.super.getAdapterPosition());
                     ad.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     ad.show();
