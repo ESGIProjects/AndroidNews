@@ -39,7 +39,7 @@ public class NewsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final SharedPreferences sp = getContext().getSharedPreferences("settings", Context.MODE_PRIVATE);
-        View v = inflater.inflate(R.layout.fragment_topics, container, false);
+        v = inflater.inflate(R.layout.fragment_news, container, false);
         if(sp.getBoolean("isOnline",true) == true){
             pd = new ProgressDialog(getContext(),R.style.AppCompatAlertDialogStyle);
             pd.setMessage("Wait...");
@@ -85,7 +85,7 @@ public class NewsFragment extends Fragment {
         isVisible=menuVisible;
     }
 
-    public void refresh(final int itemPosition){
+    public void refresh(final int itemPosition,final boolean isDelete){
         adapter = new NewsAdapter(newsList, R.layout.news_card,getContext());
         recyclerView.setAdapter(adapter);
         CallService.getInstance().getNews(CallService.getToken(getContext()), new IServiceResultListener<News>() {
@@ -95,7 +95,12 @@ public class NewsFragment extends Fragment {
                 newsList.addAll(sr.getData());
                 adapter.notifyDataSetChanged();
                 pd.dismiss();
-                recyclerView.smoothScrollToPosition(itemPosition -1);
+                if(isDelete){
+                    recyclerView.smoothScrollToPosition(itemPosition -1);
+                }
+                else{
+                    recyclerView.smoothScrollToPosition(itemPosition);
+                }
             }
         });
     }

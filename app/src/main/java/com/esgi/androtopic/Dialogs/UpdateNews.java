@@ -67,6 +67,8 @@ public class UpdateNews extends Dialog {
                     Log.i("ITEM ID : ", "" + itemNews.get_id());
                     if (sr.getResponseCode() == 204 && itemNews.getAuthor().equals(CallService.getID(getContext()))) {
                         Toast.makeText(getContext(), "The news is update !", Toast.LENGTH_SHORT).show();
+                        MainActivity aa = (MainActivity) activity;
+                        aa.nf.refresh(position, false);
                     }
                     else if(itemNews.getAuthor() != CallService.getID(getContext())){
                         Toast.makeText(getContext(), "You can't change a news which is not yours !", Toast.LENGTH_SHORT).show();
@@ -78,9 +80,6 @@ public class UpdateNews extends Dialog {
                     dismiss();
 
                     act.dismiss();
-
-                    MainActivity aa = (MainActivity) activity;
-                    aa.nf.refresh(position);
                 }
             });
         }

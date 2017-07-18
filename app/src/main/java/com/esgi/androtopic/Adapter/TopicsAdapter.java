@@ -24,7 +24,7 @@ import java.util.List;
 public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.TopicsViewHolder> {
     private List<Topics> topicsList;
     private int rowLayout;
-    private Context context;
+    Context context;
 
     public TopicsAdapter(List<Topics> topicsList, int rowLayout, Context context) {
         this.topicsList = topicsList;

@@ -67,7 +67,9 @@ public class UpdateTopics extends Dialog {
                     Log.i("ID : ", "" +CallService.getID(getContext()));
                     Log.i("ITEM ID : ", "" + itemTopics.get_id());
                     if (sr.getResponseCode() == 204 && itemTopics.getAuthor().equals(CallService.getID(getContext()))) {
-                        Toast.makeText(getContext(), "The Topics is update !", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "The Topic is update !", Toast.LENGTH_SHORT).show();
+                        MainActivity aa = (MainActivity) activity;
+                        aa.tf.refresh(position, false);
                     }
                     else if(itemTopics.getAuthor() != CallService.getID(getContext())){
                         Toast.makeText(getContext(), "You can't change a topic which is not yours !", Toast.LENGTH_SHORT).show();
@@ -77,11 +79,7 @@ public class UpdateTopics extends Dialog {
                     }
                     pd.dismiss();
                     dismiss();
-
                     act.dismiss();
-
-                    MainActivity aa = (MainActivity) activity;
-                    aa.nf.refresh(position);
                 }
             });
         }

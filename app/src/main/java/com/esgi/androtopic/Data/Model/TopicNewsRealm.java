@@ -1,19 +1,31 @@
 package com.esgi.androtopic.Data.Model;
 
+import io.realm.RealmObject;
+
 /**
- * Created by kevin on 04/07/2017.
+ * Created by kevin on 18/07/2017.
  */
 
-public class Topics {
+public class TopicNewsRealm extends RealmObject {
 
-    private String _id, author, title, content, date;
+    private String _id;
+    private String author;
+    private String title;
+    private String content;
+    private String date;
+    private String tag;
 
-    public Topics(String _id, String author, String title, String content, String date){
+    public TopicNewsRealm(String _id, String author, String title, String content, String date, String tag){
         this._id = _id;
         this.author = author;
         this.title = title;
         this.content = content;
         this.date = date;
+        this.tag = tag;
+    }
+
+    public TopicNewsRealm(){
+
     }
 
     public String get_id() {
@@ -55,4 +67,8 @@ public class Topics {
     public void setDate(String date) {
         this.date = date;
     }
+
+    public String getTag() { return this.tag; }
+
+    public void setTag(String tag) { this.tag = tag; }
 }

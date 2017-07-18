@@ -56,7 +56,7 @@ public class DeleteTopic extends Dialog {
                 if (sr.getResponseCode() == 204 && itemTopic.getAuthor().equals(CallService.getID(getContext()))) {
                     Toast.makeText(getContext(), "The topic is deleted !", Toast.LENGTH_SHORT).show();
                     MainActivity aa = (MainActivity) activity;
-                    aa.tf.refresh(position);
+                    aa.tf.refresh(position,true);
                 }
                 else if(itemTopic.getAuthor() != CallService.getID(getContext())){
                     Toast.makeText(getContext(), "You can't delete a topic which is not yours !", Toast.LENGTH_SHORT).show();

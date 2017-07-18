@@ -91,7 +91,7 @@ public class TopicsFragment extends Fragment {
         isVisible=menuVisible;
     }
 
-    public void refresh(final int itemPosition){
+    public void refresh(final int itemPosition,final boolean isDelete){
         adapter = new TopicsAdapter(topicsList, R.layout.topics_card,getContext());
         recyclerView.setAdapter(adapter);
         CallService.getInstance().getTopics(CallService.getToken(getContext()), new IServiceResultListener<Topics>() {
@@ -101,7 +101,12 @@ public class TopicsFragment extends Fragment {
                 topicsList.addAll(sr.getData());
                 adapter.notifyDataSetChanged();
                 pd.dismiss();
-                recyclerView.smoothScrollToPosition(itemPosition -1);
+                if(isDelete){
+                    recyclerView.smoothScrollToPosition(itemPosition -1);
+                }
+                else{
+                    recyclerView.smoothScrollToPosition(itemPosition);
+                }
             }
         });
     }
