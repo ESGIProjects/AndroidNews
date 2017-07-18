@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.esgi.androtopic.Data.Model.User;
 import com.esgi.androtopic.R;
@@ -38,6 +39,7 @@ public class SplashScreenActivity extends Activity {
                 if(!InternetDetection.isAvailable(getApplicationContext()) && !result.isEmpty()){
                     sp.edit().putBoolean("isOnline",false).apply();
                     i = new Intent(SplashScreenActivity.this, MainActivity.class);
+                    Toast.makeText(getApplicationContext(),"There is no internet connection, data are loaded from local database !",Toast.LENGTH_SHORT).show();
                 }
                 else if(InternetDetection.isAvailable(getApplicationContext()) && !result.isEmpty()){
                     sp.edit().putBoolean("isOnline",true).apply();

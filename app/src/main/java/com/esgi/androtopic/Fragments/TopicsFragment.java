@@ -3,6 +3,8 @@ package com.esgi.androtopic.Fragments;
 
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -39,41 +41,45 @@ public class TopicsFragment extends Fragment {
     TopicsAdapter adapter;
     List<Topics> topicsList = new ArrayList<>();
     SwipeRefreshLayout srl;
+    View v;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        pd = new ProgressDialog(getContext(),R.style.AppCompatAlertDialogStyle);
-        pd.setMessage("Wait...");
-        pd.show();
-        View v = inflater.inflate(R.layout.fragment_topics, container, false);
-        recyclerView = (RecyclerView) v.findViewById(R.id.topicsList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        srl = (SwipeRefreshLayout) v.findViewById(R.id.refreshTopics);
-        srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                CallService.getInstance().getTopics(CallService.getToken(getContext()), new IServiceResultListener<Topics>() {
-                    @Override
-                    public void onResult(ServiceResult<Topics> sr) {
-                        topicsList.clear();
-                        topicsList.addAll(sr.getData());
-                        adapter.notifyDataSetChanged();
-                        Toast.makeText(getContext(),"List is updated !", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                srl.setRefreshing(false);
-            }
-        });
+        final SharedPreferences sp = getContext().getSharedPreferences("settings", Context.MODE_PRIVATE);
+        v = inflater.inflate(R.layout.fragment_topics, container, false);
+        if(sp.getBoolean("isOnline",true)){
+            pd = new ProgressDialog(getContext(),R.style.AppCompatAlertDialogStyle);
+            pd.setMessage("Wait...");
+            pd.show();
+            recyclerView = (RecyclerView) v.findViewById(R.id.topicsList);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            srl = (SwipeRefreshLayout) v.findViewById(R.id.refreshTopics);
+            srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    CallService.getInstance().getTopics(CallService.getToken(getContext()), new IServiceResultListener<Topics>() {
+                        @Override
+                        public void onResult(ServiceResult<Topics> sr) {
+                            topicsList.clear();
+                            topicsList.addAll(sr.getData());
+                            adapter.notifyDataSetChanged();
+                            Toast.makeText(getContext(),"List is updated !", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    srl.setRefreshing(false);
+                }
+            });
 
-        adapter = new TopicsAdapter(topicsList, R.layout.topics_card,getContext());
-        recyclerView.setAdapter(adapter);
-        CallService.getInstance().getTopics(CallService.getToken(getContext()), new IServiceResultListener<Topics>() {
-            @Override
-            public void onResult(ServiceResult<Topics> sr) {
-                topicsList.addAll(sr.getData());
-                adapter.notifyDataSetChanged();
-                pd.dismiss();
-            }
-        });
+            adapter = new TopicsAdapter(topicsList, R.layout.topics_card,getContext());
+            recyclerView.setAdapter(adapter);
+            CallService.getInstance().getTopics(CallService.getToken(getContext()), new IServiceResultListener<Topics>() {
+                @Override
+                public void onResult(ServiceResult<Topics> sr) {
+                    topicsList.addAll(sr.getData());
+                    adapter.notifyDataSetChanged();
+                    pd.dismiss();
+                }
+            });
+        }
         return v;
     }
 

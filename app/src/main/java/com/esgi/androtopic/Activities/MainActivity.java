@@ -1,7 +1,9 @@
 package com.esgi.androtopic.Activities;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.esgi.androtopic.Dialogs.AddNews;
 import com.esgi.androtopic.Dialogs.AddTopic;
@@ -25,6 +28,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
 
+import static java.security.AccessController.getContext;
+
 public class MainActivity extends FragmentActivity {
 
     BottomNavigationView bnv;
@@ -34,15 +39,21 @@ public class MainActivity extends FragmentActivity {
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView title;
     @OnClick(R.id.fab) void action(){
-        if(bnv.getMenu().getItem(0).isChecked()){
-            AddNews an = new AddNews(this);
-            an.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            an.show();
+        final SharedPreferences sp = getApplicationContext().getSharedPreferences("settings", Context.MODE_PRIVATE);
+        if(sp.getBoolean("isOnline",true)){
+            if(bnv.getMenu().getItem(0).isChecked()){
+                AddNews an = new AddNews(this);
+                an.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                an.show();
+            }
+            else{
+                AddTopic at = new AddTopic(this);
+                at.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                at.show();
+            }
         }
         else{
-            AddTopic at = new AddTopic(this);
-            at.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            at.show();
+            Toast.makeText(getApplicationContext(),"There is no internet connection !",Toast.LENGTH_SHORT).show();
         }
     }
     @OnClick(R.id.signout) void signout(){

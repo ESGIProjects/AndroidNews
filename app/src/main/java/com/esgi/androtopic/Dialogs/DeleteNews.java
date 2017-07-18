@@ -58,6 +58,8 @@ public class DeleteNews extends Dialog {
                 Log.i("ITEM ID : ", "" + itemNews.get_id());
                 if (sr.getResponseCode() == 204 && itemNews.getAuthor().equals(CallService.getID(getContext()))) {
                     Toast.makeText(getContext(), "The news is deleted !", Toast.LENGTH_SHORT).show();
+                    MainActivity ma = (MainActivity) activity;
+                    ma.nf.refresh(position);
                 }
                 else if(itemNews.getAuthor() != CallService.getID(getContext())){
                     Toast.makeText(getContext(), "You can't delete a news which is not yours !", Toast.LENGTH_SHORT).show();
@@ -68,9 +70,6 @@ public class DeleteNews extends Dialog {
                 pd.dismiss();
                 dismiss();
                 act.dismiss();
-
-                MainActivity ma = (MainActivity) activity;
-                ma.nf.refresh(position);
             }
         });
 

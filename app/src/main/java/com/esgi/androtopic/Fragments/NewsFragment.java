@@ -1,6 +1,8 @@
 package com.esgi.androtopic.Fragments;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -36,39 +38,42 @@ public class NewsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        pd = new ProgressDialog(getContext(),R.style.AppCompatAlertDialogStyle);
-        pd.setMessage("Wait...");
-        pd.show();
-        v = inflater.inflate(R.layout.fragment_news, container, false);
-        recyclerView = (RecyclerView) v.findViewById(R.id.newsList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        srl = (SwipeRefreshLayout) v.findViewById(R.id.refresh);
-        srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                CallService.getInstance().getNews(CallService.getToken(getContext()), new IServiceResultListener<News>() {
-                    @Override
-                    public void onResult(ServiceResult<News> sr) {
-                        newsList.clear();
-                        newsList.addAll(sr.getData());
-                        adapter.notifyDataSetChanged();
-                        Toast.makeText(getContext(),"List is updated !", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                srl.setRefreshing(false);
-            }
-        });
+        final SharedPreferences sp = getContext().getSharedPreferences("settings", Context.MODE_PRIVATE);
+        View v = inflater.inflate(R.layout.fragment_topics, container, false);
+        if(sp.getBoolean("isOnline",true) == true){
+            pd = new ProgressDialog(getContext(),R.style.AppCompatAlertDialogStyle);
+            pd.setMessage("Wait...");
+            pd.show();
+            recyclerView = (RecyclerView) v.findViewById(R.id.newsList);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            srl = (SwipeRefreshLayout) v.findViewById(R.id.refresh);
+            srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    CallService.getInstance().getNews(CallService.getToken(getContext()), new IServiceResultListener<News>() {
+                        @Override
+                        public void onResult(ServiceResult<News> sr) {
+                            newsList.clear();
+                            newsList.addAll(sr.getData());
+                            adapter.notifyDataSetChanged();
+                            Toast.makeText(getContext(),"List is updated !", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    srl.setRefreshing(false);
+                }
+            });
 
-        adapter = new NewsAdapter(newsList, R.layout.news_card,getContext());
-        recyclerView.setAdapter(adapter);
-        CallService.getInstance().getNews(CallService.getToken(getContext()), new IServiceResultListener<News>() {
-            @Override
-            public void onResult(ServiceResult<News> sr) {
-                newsList.addAll(sr.getData());
-                adapter.notifyDataSetChanged();
-                pd.dismiss();
-            }
-        });
+            adapter = new NewsAdapter(newsList, R.layout.news_card,getContext());
+            recyclerView.setAdapter(adapter);
+            CallService.getInstance().getNews(CallService.getToken(getContext()), new IServiceResultListener<News>() {
+                @Override
+                public void onResult(ServiceResult<News> sr) {
+                    newsList.addAll(sr.getData());
+                    adapter.notifyDataSetChanged();
+                    pd.dismiss();
+                }
+            });
+        }
         return v;
     }
 

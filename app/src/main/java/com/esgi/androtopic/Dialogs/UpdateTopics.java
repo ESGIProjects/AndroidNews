@@ -43,8 +43,7 @@ public class UpdateTopics extends Dialog {
     @BindView(R.id.customDialogTopicsUpdateTitle) EditText title;
     @BindView(R.id.customDialogTopicsUpdateContent) EditText content;
     @BindView(R.id.customDialogTopicsUpdateLabelDate) TextView labelDate;
-    @BindView(R.id.customDialogTopicsUpdateDate)
-    CheckBox checkDate;
+    @BindView(R.id.customDialogTopicsUpdateDate) CheckBox checkDate;
 
     @OnClick(R.id.updateTopics) void updateTopics(){
         pd = new ProgressDialog(getContext(), R.style.AppCompatAlertDialogStyle);
@@ -112,6 +111,6 @@ public class UpdateTopics extends Dialog {
     protected  void onStart(){
         title.setText(itemTopics.getTitle());
         content.setText(itemTopics.getContent());
-        labelDate.setText(itemTopics.getDate());
+        labelDate.setText("Insert new date ?");
     }
 }

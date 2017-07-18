@@ -42,8 +42,7 @@ public class UpdateNews extends Dialog {
     @BindView(R.id.customDialogNewsUpdateTitle) EditText title;
     @BindView(R.id.customDialogNewsUpdateContent) EditText content;
     @BindView(R.id.customDialogNewsUpdateLabelDate) TextView labelDate;
-    @BindView(R.id.customDialogNewsUpdateDate)
-    CheckBox checkDate;
+    @BindView(R.id.customDialogNewsUpdateDate) CheckBox checkDate;
 
     @OnClick(R.id.updateNews) void updateNews(){
         pd = new ProgressDialog(getContext(), R.style.AppCompatAlertDialogStyle);
@@ -111,6 +110,6 @@ public class UpdateNews extends Dialog {
     protected  void onStart(){
         title.setText(itemNews.getTitle());
         content.setText(itemNews.getContent());
-        labelDate.setText(itemNews.getDate());
+        labelDate.setText("Insert new date ?");
     }
 }
