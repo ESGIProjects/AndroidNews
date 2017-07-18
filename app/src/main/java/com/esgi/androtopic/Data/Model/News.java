@@ -16,6 +16,10 @@ public class News {
         this.date = date;
     }
 
+    public News(){
+
+    }
+
     public String get_id() {
         return _id;
     }

@@ -18,10 +18,16 @@ import com.esgi.androtopic.Data.Api.IServiceResultListener;
 import com.esgi.androtopic.Data.Api.ServiceResult;
 import com.esgi.androtopic.Data.Api.Services.CallService;
 import com.esgi.androtopic.Data.Model.News;
+import com.esgi.androtopic.Data.Model.TopicNewsRealm;
+import com.esgi.androtopic.Data.Model.User;
 import com.esgi.androtopic.R;
+import com.esgi.androtopic.Tools.RealmInstance;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 /**
  * Created by kevin on 03/07/2017.
@@ -36,8 +42,12 @@ public class NewsFragment extends Fragment {
     SwipeRefreshLayout srl;
     View v;
 
+    Realm realm;
+    TopicNewsRealm tnr;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        realm = RealmInstance.getRealmInstance(getContext());
         final SharedPreferences sp = getContext().getSharedPreferences("settings", Context.MODE_PRIVATE);
         v = inflater.inflate(R.layout.fragment_news, container, false);
         if(sp.getBoolean("isOnline",true) == true){
@@ -55,6 +65,8 @@ public class NewsFragment extends Fragment {
                         public void onResult(ServiceResult<News> sr) {
                             newsList.clear();
                             newsList.addAll(sr.getData());
+                            deleteNews();
+                            addDatabase(sr.getData());
                             adapter.notifyDataSetChanged();
                             Toast.makeText(getContext(),"List is updated !", Toast.LENGTH_SHORT).show();
                         }
@@ -69,10 +81,21 @@ public class NewsFragment extends Fragment {
                 @Override
                 public void onResult(ServiceResult<News> sr) {
                     newsList.addAll(sr.getData());
+                    deleteNews();
+                    addDatabase(sr.getData());
                     adapter.notifyDataSetChanged();
                     pd.dismiss();
                 }
             });
+        }
+        else{
+            recyclerView = (RecyclerView) v.findViewById(R.id.newsList);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            adapter = new NewsAdapter(newsList, R.layout.news_card,getContext());
+            recyclerView.setAdapter(adapter);
+            RealmResults<TopicNewsRealm> results = realm.where(TopicNewsRealm.class).findAll();
+            newsList.addAll(getDatabase(results));
+            adapter.notifyDataSetChanged();
         }
         return v;
     }
@@ -93,6 +116,8 @@ public class NewsFragment extends Fragment {
             public void onResult(ServiceResult<News> sr) {
                 newsList.clear();
                 newsList.addAll(sr.getData());
+                deleteNews();
+                addDatabase(sr.getData());
                 adapter.notifyDataSetChanged();
                 pd.dismiss();
                 if(isDelete){
@@ -107,5 +132,45 @@ public class NewsFragment extends Fragment {
 
     public boolean isFragmentVisible(){
         return isVisible;
+    }
+
+    public void addDatabase(List<News> list){
+
+        for(final News n : list){
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm bgRealm) {
+                    tnr = realm.createObject(TopicNewsRealm.class);
+                    tnr.set_id(n.get_id());
+                    tnr.setAuthor(n.getAuthor());
+                    tnr.setTitle(n.getTitle());
+                    tnr.setContent(n.getContent());
+                    //tnr.setDate(n.getDate());
+                    tnr.setTag("NEWS");
+                }
+            });
+        }
+    }
+
+    public List<News> getDatabase(RealmResults<TopicNewsRealm> results){
+        List<News> list = new ArrayList<>();
+        int i = 0;
+        for(TopicNewsRealm tnr : results){
+            News news = new News();
+            news.set_id(tnr.get_id());
+            news.setAuthor(tnr.getAuthor());
+            news.setTitle(tnr.getTitle());
+            news.setContent(tnr.getContent());
+            list.add(i,news);
+            i++;
+        }
+        return list;
+    }
+
+    public void deleteNews(){
+        RealmResults<TopicNewsRealm> results = realm.where(TopicNewsRealm.class).equalTo("tag","NEWS").findAll();
+        realm.beginTransaction();
+        results.deleteAllFromRealm();
+        realm.commitTransaction();
     }
 }

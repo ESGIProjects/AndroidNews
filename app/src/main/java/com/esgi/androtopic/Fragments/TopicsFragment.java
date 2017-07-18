@@ -61,6 +61,9 @@ public class TopicsFragment extends Fragment {
                         public void onResult(ServiceResult<Topics> sr) {
                             topicsList.clear();
                             topicsList.addAll(sr.getData());
+                            for(Topics t : sr.getData()){
+
+                            }
                             adapter.notifyDataSetChanged();
                             Toast.makeText(getContext(),"List is updated !", Toast.LENGTH_SHORT).show();
                         }

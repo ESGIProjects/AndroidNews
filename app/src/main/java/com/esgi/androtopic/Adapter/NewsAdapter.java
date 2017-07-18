@@ -42,7 +42,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
     @Override
     public void onBindViewHolder(NewsViewHolder holder, final int position) {
-        // TODO : complete the cardview model
         holder.title.setText(newsList.get(position).getTitle());
         holder.content.setText(newsList.get(position).getContent());
     }
@@ -84,4 +83,3 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         }
     }
 }
-
