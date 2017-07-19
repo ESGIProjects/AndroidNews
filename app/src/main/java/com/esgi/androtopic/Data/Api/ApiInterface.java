@@ -36,7 +36,7 @@ public interface ApiInterface {
     Call<Void> sign(@Body PostSubscribe ps);
 
     @POST("/comments")
-    Call<Void> postComments(@Body PostComment pc);
+    Call<Void> postComments(@Header("Authorization") String token, @Body PostComment pc);
 
     @POST("/news")
     Call<Void> postNews(@Header("Authorization") String token, @Body PostNews pn);
@@ -53,7 +53,7 @@ public interface ApiInterface {
     //DELETE ENDPOINTS
 
     @DELETE("/comments/{id}")
-    Call<Void> delComment(@Path("id") int id);
+    Call<Void> delComment(@Header("Authorization") String token, @Path("id") int id);
 
     @DELETE("/news/{id}")
     Call<Void> delNews(@Header("Authorization") String token, @Path("id") String id);
@@ -67,10 +67,10 @@ public interface ApiInterface {
     //GET ENDPOINTS
 
     @GET("/comments")
-    Call<Void> getComments();
+    Call<Void> getComments(@Header("Authorization") String token);
 
     @GET("/comments/{id}")
-    Call<Void> getComment(@Path("id") int id);
+    Call<Void> getComment(@Header("Authorization") String token, @Path("id") int id);
 
     @GET("/news")
     Call<List<News>> getNews(@Header("Authorization") String token);
@@ -96,7 +96,7 @@ public interface ApiInterface {
     // PUT ENDPOINTS
 
     @PUT("/comments/{id}")
-    Call<Void> putComment(@Body PostComment pc ,@Path("id") int id);
+    Call<Void> putComment(@Header("Authorization") String token, @Body PostComment pc ,@Path("id") int id);
 
     @PUT("/news/{id}")
     Call<Void> putNews(@Header("Authorization") String token,@Body PostNews pn ,@Path("id") String id);

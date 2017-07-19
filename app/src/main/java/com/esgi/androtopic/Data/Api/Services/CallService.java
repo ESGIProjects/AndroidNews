@@ -7,6 +7,7 @@ import com.esgi.androtopic.Data.Api.IServiceResultListener;
 import com.esgi.androtopic.Data.Api.ServiceResult;
 import com.esgi.androtopic.Data.Model.News;
 import com.esgi.androtopic.Data.Model.PostAuth;
+import com.esgi.androtopic.Data.Model.PostComment;
 import com.esgi.androtopic.Data.Model.PostNews;
 import com.esgi.androtopic.Data.Model.PostSubscribe;
 import com.esgi.androtopic.Data.Model.PostTopic;
@@ -27,7 +28,7 @@ import retrofit2.Response;
  * Created by kevin on 29/06/2017.
  */
 
-public class CallService implements IAuthService, INewsService, ITopicService, IUserService {
+public class CallService implements IAuthService, INewsService, ITopicService, IUserService, ICommentService {
 
     static CallService cs = null;
 
@@ -320,5 +321,120 @@ public class CallService implements IAuthService, INewsService, ITopicService, I
     public static String getID(Context context){
         RealmResults<User> result = RealmInstance.getRealmInstance(context).where(User.class).findAll();
         return result.get(0).getId();
+    }
+
+    @Override
+    public void postComments(String token, PostComment pc, final IServiceResultListener<Void> isrl) {
+        ApiCall.getRetrofitInstance().postComments(token, pc)
+                .enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        ServiceResult<Void> sr = new ServiceResult<>();
+                        sr.setResponseCode(response.code());
+                        Log.i("RESPONSE : ", response.message());
+                        isrl.onResult(sr);
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        ServiceResult<Void> sr = new ServiceResult<>();
+                        sr.setException(t);
+                        Log.i("FAILURE : ", "No response from server");
+                        Log.i("CAUSE : ", t.getMessage().toString());
+                        isrl.onResult(sr);
+                    }
+                });
+    }
+
+    @Override
+    public void delComments(String token, int i, final IServiceResultListener<Void> isrl) {
+        ApiCall.getRetrofitInstance().delComment(token, i)
+                .enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        ServiceResult<Void> sr = new ServiceResult<>();
+                        sr.setResponseCode(response.code());
+                        Log.i("RESPONSE : ", response.message());
+                        isrl.onResult(sr);
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        ServiceResult<Void> sr = new ServiceResult<>();
+                        sr.setException(t);
+                        Log.i("FAILURE : ", "No response from server");
+                        Log.i("CAUSE : ", t.getMessage().toString());
+                        isrl.onResult(sr);
+                    }
+                });
+    }
+
+    @Override
+    public void getComments(String token, final IServiceResultListener<Void> isrl) {
+        ApiCall.getRetrofitInstance().getComments(token)
+                .enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        ServiceResult<Void> sr = new ServiceResult<>();
+                        sr.setResponseCode(response.code());
+                        Log.i("RESPONSE : ", response.message());
+                        isrl.onResult(sr);
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        ServiceResult<Void> sr = new ServiceResult<>();
+                        sr.setException(t);
+                        Log.i("FAILURE : ", "No response from server");
+                        Log.i("CAUSE : ", t.getMessage().toString());
+                        isrl.onResult(sr);
+                    }
+                });
+    }
+
+    @Override
+    public void getComment(String token, int i, final IServiceResultListener<Void> isrl) {
+        ApiCall.getRetrofitInstance().getComment(token, i)
+                .enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        ServiceResult<Void> sr = new ServiceResult<>();
+                        sr.setResponseCode(response.code());
+                        Log.i("RESPONSE : ", response.message());
+                        isrl.onResult(sr);
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        ServiceResult<Void> sr = new ServiceResult<>();
+                        sr.setException(t);
+                        Log.i("FAILURE : ", "No response from server");
+                        Log.i("CAUSE : ", t.getMessage().toString());
+                        isrl.onResult(sr);
+                    }
+                });
+    }
+
+    @Override
+    public void putComment(String token, PostComment pc, int i, final IServiceResultListener<Void> isrl) {
+        ApiCall.getRetrofitInstance().putComment(token, pc, i)
+                .enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        ServiceResult<Void> sr = new ServiceResult<>();
+                        sr.setResponseCode(response.code());
+                        Log.i("RESPONSE : ", response.message());
+                        isrl.onResult(sr);
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        ServiceResult<Void> sr = new ServiceResult<>();
+                        sr.setException(t);
+                        Log.i("FAILURE : ", "No response from server");
+                        Log.i("CAUSE : ", t.getMessage().toString());
+                        isrl.onResult(sr);
+                    }
+                });
     }
 }

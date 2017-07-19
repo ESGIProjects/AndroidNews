@@ -9,13 +9,13 @@ import com.esgi.androtopic.Data.Model.PostComment;
 
 public interface ICommentService {
 
-    public void postComments(PostComment pc, IServiceResultListener<Void> isrl);
+    public void postComments(String token, PostComment pc, IServiceResultListener<Void> isrl);
 
-    public void delComments(int i, IServiceResultListener<Void> isrl);
+    public void delComments(String token, int i, IServiceResultListener<Void> isrl);
 
-    public void getComments(IServiceResultListener<Void> isrl);
+    public void getComments(String token, IServiceResultListener<Void> isrl);
 
-    public void getComment(int i, IServiceResultListener<Void> isrl);
+    public void getComment(String token, int i, IServiceResultListener<Void> isrl);
 
-    public void putComment(PostComment pc ,int i, IServiceResultListener<Void> isrl);
+    public void putComment(String token, PostComment pc ,int i, IServiceResultListener<Void> isrl);
 }
