@@ -8,14 +8,24 @@ import io.realm.RealmObject;
 
 public class Comments extends RealmObject {
 
-    private String _id, author, title, content, news;
+    private String _id, author, title, content, news, date;
 
-    public Comments(String _id, String author, String title, String content, String news){
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public Comments(String _id, String author, String title, String content, String news, String date){
         this._id = _id;
         this.author = author;
         this.title = title;
         this.content = content;
         this.news = news;
+        this.date = date;
+
     }
 
     public Comments(){

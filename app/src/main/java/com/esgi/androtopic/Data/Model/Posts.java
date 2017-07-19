@@ -6,7 +6,23 @@ import io.realm.RealmObject;
  * Created by kevin on 28/06/2017.
  */
 
-public class PostPost extends RealmObject{
+public class Posts extends RealmObject{
+
+    private String _id;
+
+    private String author;
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String get_id(){ return _id;}
+
+    public void set_id(String _id){ this._id = _id; }
 
     private String title;
 
@@ -48,14 +64,15 @@ public class PostPost extends RealmObject{
         this.title = title;
     }
 
-    public PostPost(String title, String content, String date, String topic){
+    public Posts(String _id, String title, String content, String date, String topic){
+        this._id = _id;
         this.title = title;
         this.content = content;
         this.date = date;
         this.topic = topic;
     }
 
-    public PostPost(){
+    public Posts(){
 
     }
 

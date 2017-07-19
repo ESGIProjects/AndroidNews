@@ -9,15 +9,14 @@ import com.esgi.androtopic.Data.Model.News;
 import com.esgi.androtopic.Data.Model.PostAuth;
 import com.esgi.androtopic.Data.Model.PostComment;
 import com.esgi.androtopic.Data.Model.PostNews;
-import com.esgi.androtopic.Data.Model.PostPost;
 import com.esgi.androtopic.Data.Model.PostSubscribe;
 import com.esgi.androtopic.Data.Model.PostTopic;
+import com.esgi.androtopic.Data.Model.Posts;
 import com.esgi.androtopic.Data.Model.Topics;
 import com.esgi.androtopic.Data.Model.User;
 import com.esgi.androtopic.Tools.ApiCall;
 import com.esgi.androtopic.Tools.RealmInstance;
 
-import java.io.IOException;
 import java.util.List;
 
 import io.realm.RealmResults;
@@ -347,12 +346,12 @@ public class CallService implements IAuthService, INewsService, ITopicService, I
                 });
     }
 
-    public void getPosts(String token, final IServiceResultListener<PostPost> isrl) {
+    public void getPosts(String token, final IServiceResultListener<Posts> isrl) {
         ApiCall.getRetrofitInstance().getPosts(token)
-                .enqueue(new Callback<List<PostPost>>() {
+                .enqueue(new Callback<List<Posts>>() {
                     @Override
-                    public void onResponse(Call<List<PostPost>> call, Response<List<PostPost>> response) {
-                        ServiceResult<PostPost> sr = new ServiceResult<PostPost>();
+                    public void onResponse(Call<List<Posts>> call, Response<List<Posts>> response) {
+                        ServiceResult<Posts> sr = new ServiceResult<Posts>();
                         sr.setResponseCode(response.code());
                         sr.setData(response.body());
                         Log.i("RESPONSE : ", response.message());
@@ -361,8 +360,8 @@ public class CallService implements IAuthService, INewsService, ITopicService, I
                     }
 
                     @Override
-                    public void onFailure(Call<List<PostPost>> call, Throwable t) {
-                        ServiceResult<PostPost> sr = new ServiceResult<PostPost>();
+                    public void onFailure(Call<List<Posts>> call, Throwable t) {
+                        ServiceResult<Posts> sr = new ServiceResult<Posts>();
                         sr.setException(t);
                         Log.i("FAILURE : ", "No response from server");
                         Log.i("CAUSE : ", t.getMessage().toString());

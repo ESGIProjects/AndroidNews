@@ -28,8 +28,6 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-import static android.R.id.list;
-
 /**
  * Created by kevin on 03/07/2017.
  */

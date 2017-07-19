@@ -2,8 +2,6 @@ package com.esgi.androtopic.Dialogs;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -12,7 +10,6 @@ import android.view.Window;
 import com.esgi.androtopic.Activities.MainActivity;
 import com.esgi.androtopic.Data.Model.News;
 import com.esgi.androtopic.Data.Model.Topics;
-import com.esgi.androtopic.Fragments.NewsFragment;
 import com.esgi.androtopic.R;
 
 import butterknife.ButterKnife;

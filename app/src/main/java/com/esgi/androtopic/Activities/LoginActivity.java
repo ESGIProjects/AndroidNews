@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -14,7 +13,6 @@ import com.esgi.androtopic.Data.Api.Services.CallService;
 import com.esgi.androtopic.Data.Model.PostAuth;
 import com.esgi.androtopic.Data.Model.User;
 import com.esgi.androtopic.R;
-import com.esgi.androtopic.Tools.ApiCall;
 import com.esgi.androtopic.Tools.CheckRules;
 import com.esgi.androtopic.Tools.InternetDetection;
 import com.esgi.androtopic.Tools.RealmInstance;

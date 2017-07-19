@@ -1,7 +1,7 @@
 package com.esgi.androtopic.Data.Api.Services;
 
 import com.esgi.androtopic.Data.Api.IServiceResultListener;
-import com.esgi.androtopic.Data.Model.PostPost;
+import com.esgi.androtopic.Data.Model.Posts;
 
 /**
  * Created by kevin on 28/06/2017.
@@ -9,7 +9,7 @@ import com.esgi.androtopic.Data.Model.PostPost;
 
 public interface IPostService {
 
-    void postPost(String token, PostPost pp, IServiceResultListener<Void> isrl);
+    void postPost(String token, Posts p, IServiceResultListener<Void> isrl);
 
     void delPost(int i, IServiceResultListener<Void> isrl);
 
@@ -17,6 +17,6 @@ public interface IPostService {
 
     void getPost(int i, IServiceResultListener<Void> isrl);
 
-    void putPost(PostPost pp ,int i, IServiceResultListener<Void> isrl);
+    void putPost(Posts p ,int i, IServiceResultListener<Void> isrl);
 
 }

@@ -3,34 +3,18 @@ package com.esgi.androtopic.Dialogs;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.RecyclerView;
-import android.telecom.Call;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.esgi.androtopic.Activities.MainActivity;
-import com.esgi.androtopic.Adapter.NewsAdapter;
 import com.esgi.androtopic.Data.Api.IServiceResultListener;
 import com.esgi.androtopic.Data.Api.ServiceResult;
 import com.esgi.androtopic.Data.Api.Services.CallService;
 import com.esgi.androtopic.Data.Model.News;
-import com.esgi.androtopic.Data.Model.PostNews;
-import com.esgi.androtopic.Fragments.NewsFragment;
 import com.esgi.androtopic.R;
-import com.esgi.androtopic.Tools.CheckRules;
-import com.esgi.androtopic.Tools.GetDate;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 

@@ -1,7 +1,7 @@
 package com.esgi.androtopic.Adapter;
 
-import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.CardView;
@@ -70,16 +70,19 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             title = (TextView) v.findViewById(R.id.title);
             content = (TextView) v.findViewById(R.id.content);
             date = (TextView) v.findViewById(R.id.date);
-            cv.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
+            final SharedPreferences sp = v.getContext().getSharedPreferences("settings", Context.MODE_PRIVATE);
+            if(sp.getBoolean("isOnline",true)){
+                cv.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
 
-                    ActionDialog ad = new ActionDialog((MainActivity) v.getContext(), newsList.get(NewsViewHolder.super.getAdapterPosition()), NewsViewHolder.super.getAdapterPosition());
-                    ad.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    ad.show();
-                    return true;
-                }
-            });
+                        ActionDialog ad = new ActionDialog((MainActivity) v.getContext(), newsList.get(NewsViewHolder.super.getAdapterPosition()), NewsViewHolder.super.getAdapterPosition());
+                        ad.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        ad.show();
+                        return true;
+                    }
+                });
+            }
         }
     }
 }

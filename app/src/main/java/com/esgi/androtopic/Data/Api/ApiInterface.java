@@ -4,9 +4,9 @@ import com.esgi.androtopic.Data.Model.News;
 import com.esgi.androtopic.Data.Model.PostAuth;
 import com.esgi.androtopic.Data.Model.PostComment;
 import com.esgi.androtopic.Data.Model.PostNews;
-import com.esgi.androtopic.Data.Model.PostPost;
 import com.esgi.androtopic.Data.Model.PostSubscribe;
 import com.esgi.androtopic.Data.Model.PostTopic;
+import com.esgi.androtopic.Data.Model.Posts;
 import com.esgi.androtopic.Data.Model.Topics;
 import com.esgi.androtopic.Data.Model.User;
 
@@ -48,7 +48,7 @@ public interface ApiInterface {
     Call<Void> postTopic(@Header("Authorization") String token,@Body PostTopic pt);
 
     @POST("/post")
-    Call<Void> postPost(@Body PostPost pn);
+    Call<Void> postPost(@Body Posts pn);
 
     //DELETE ENDPOINTS
 
@@ -79,7 +79,7 @@ public interface ApiInterface {
     Call<Void> getNews(@Path("id") int id);
 
     @GET("/posts")
-    Call<List<PostPost>> getPosts(@Header("Authorization") String token);
+    Call<List<Posts>> getPosts(@Header("Authorization") String token);
 
     @GET("/posts/{id}")
     Call<Void> getPost(@Path("id") int id);
@@ -102,7 +102,7 @@ public interface ApiInterface {
     Call<Void> putNews(@Header("Authorization") String token,@Body PostNews pn ,@Path("id") String id);
 
     @PUT("/posts/{id}")
-    Call<Void> putPost(@Body PostPost pp ,@Path("id") int id);
+    Call<Void> putPost(@Body Posts pp , @Path("id") int id);
 
     @PUT("/topics/{id}")
     Call<Void> putTopic(@Header("Authorization") String token,@Body PostTopic pn ,@Path("id") String id);

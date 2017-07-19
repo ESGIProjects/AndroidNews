@@ -1,7 +1,6 @@
 package com.esgi.androtopic.Fragments;
 
 
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -15,12 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.esgi.androtopic.Adapter.NewsAdapter;
 import com.esgi.androtopic.Adapter.TopicsAdapter;
 import com.esgi.androtopic.Data.Api.IServiceResultListener;
 import com.esgi.androtopic.Data.Api.ServiceResult;
 import com.esgi.androtopic.Data.Api.Services.CallService;
-import com.esgi.androtopic.Data.Model.News;
 import com.esgi.androtopic.Data.Model.Topics;
 import com.esgi.androtopic.R;
 import com.esgi.androtopic.Tools.RealmInstance;
@@ -31,9 +28,6 @@ import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
-
-import static com.esgi.androtopic.R.id.newsList;
-import static com.esgi.androtopic.R.id.top;
 
 /**
  * Created by kevin on 03/07/2017.

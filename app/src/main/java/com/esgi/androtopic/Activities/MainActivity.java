@@ -28,8 +28,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
 
-import static java.security.AccessController.getContext;
-
 public class MainActivity extends FragmentActivity {
 
     BottomNavigationView bnv;
