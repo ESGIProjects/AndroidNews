@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +17,7 @@ import android.widget.TextView;
 import com.esgi.androtopic.Activities.MainActivity;
 import com.esgi.androtopic.Data.Model.News;
 import com.esgi.androtopic.Dialogs.ActionDialog;
+import com.esgi.androtopic.Fragments.CommentsFragment;
 import com.esgi.androtopic.R;
 
 import java.util.List;
@@ -83,6 +87,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
                     }
                 });
             }
+            cv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                }
+            });
         }
     }
 }
