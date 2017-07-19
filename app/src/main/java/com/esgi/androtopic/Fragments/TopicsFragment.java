@@ -23,9 +23,14 @@ import com.esgi.androtopic.Data.Api.Services.CallService;
 import com.esgi.androtopic.Data.Model.News;
 import com.esgi.androtopic.Data.Model.Topics;
 import com.esgi.androtopic.R;
+import com.esgi.androtopic.Tools.RealmInstance;
+import com.esgi.androtopic.Tools.RealmQuery;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 import static com.esgi.androtopic.R.id.newsList;
 import static com.esgi.androtopic.R.id.top;
@@ -43,7 +48,10 @@ public class TopicsFragment extends Fragment {
     SwipeRefreshLayout srl;
     View v;
 
+    Realm realm;
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        realm = RealmInstance.getRealmInstance(getContext());
         final SharedPreferences sp = getContext().getSharedPreferences("settings", Context.MODE_PRIVATE);
         v = inflater.inflate(R.layout.fragment_topics, container, false);
         if(sp.getBoolean("isOnline",true)){
@@ -61,9 +69,8 @@ public class TopicsFragment extends Fragment {
                         public void onResult(ServiceResult<Topics> sr) {
                             topicsList.clear();
                             topicsList.addAll(sr.getData());
-                            for(Topics t : sr.getData()){
-
-                            }
+                            RealmQuery.deleteTopics(realm);
+                            RealmQuery.addTopicsDatabase(realm,sr.getData());
                             adapter.notifyDataSetChanged();
                             Toast.makeText(getContext(),"List is updated !", Toast.LENGTH_SHORT).show();
                         }
@@ -78,10 +85,21 @@ public class TopicsFragment extends Fragment {
                 @Override
                 public void onResult(ServiceResult<Topics> sr) {
                     topicsList.addAll(sr.getData());
+                    RealmQuery.deleteTopics(realm);
+                    RealmQuery.addTopicsDatabase(realm,sr.getData());
                     adapter.notifyDataSetChanged();
                     pd.dismiss();
                 }
             });
+        }
+        else{
+            recyclerView = (RecyclerView) v.findViewById(R.id.topicsList);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            adapter = new TopicsAdapter(topicsList, R.layout.topics_card,getContext());
+            recyclerView.setAdapter(adapter);
+            RealmResults<Topics> results = realm.where(Topics.class).findAll();
+            topicsList.addAll(RealmQuery.getTopicsDatabase(results));
+            adapter.notifyDataSetChanged();
         }
         return v;
     }
@@ -102,6 +120,8 @@ public class TopicsFragment extends Fragment {
             public void onResult(ServiceResult<Topics> sr) {
                 topicsList.clear();
                 topicsList.addAll(sr.getData());
+                RealmQuery.deleteTopics(realm);
+                RealmQuery.addTopicsDatabase(realm,sr.getData());
                 adapter.notifyDataSetChanged();
                 pd.dismiss();
                 if(isDelete){

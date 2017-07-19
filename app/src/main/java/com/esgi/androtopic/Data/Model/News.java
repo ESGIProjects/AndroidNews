@@ -1,10 +1,12 @@
 package com.esgi.androtopic.Data.Model;
 
+import io.realm.RealmObject;
+
 /**
  * Created by kevin on 04/07/2017.
  */
 
-public class News {
+public class News extends RealmObject {
 
     private String _id, author, title, content, date;
 

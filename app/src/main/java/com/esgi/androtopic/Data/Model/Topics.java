@@ -1,10 +1,12 @@
 package com.esgi.androtopic.Data.Model;
 
+import io.realm.RealmObject;
+
 /**
  * Created by kevin on 04/07/2017.
  */
 
-public class Topics {
+public class Topics extends RealmObject {
 
     private String _id, author, title, content, date;
 
@@ -14,6 +16,10 @@ public class Topics {
         this.title = title;
         this.content = content;
         this.date = date;
+    }
+
+    public Topics(){
+
     }
 
     public String get_id() {
