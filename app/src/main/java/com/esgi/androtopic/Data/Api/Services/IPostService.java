@@ -13,7 +13,7 @@ public interface IPostService {
 
     void delPost(int i, IServiceResultListener<Void> isrl);
 
-    void getPosts(IServiceResultListener<Void> isrl);
+    void getPosts(String token, IServiceResultListener<Void> isrl);
 
     void getPost(int i, IServiceResultListener<Void> isrl);
 
