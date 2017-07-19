@@ -16,7 +16,7 @@ public interface ICommentService {
 
     public void delComments(String token, int i, IServiceResultListener<Void> isrl);
 
-    public void getComments(String token, IServiceResultListener<List<Comments>> isrl);
+    public void getComments(String token, String news, IServiceResultListener<Comments> isrl);
 
     public void getComment(String token, int i, IServiceResultListener<Comments> isrl);
 

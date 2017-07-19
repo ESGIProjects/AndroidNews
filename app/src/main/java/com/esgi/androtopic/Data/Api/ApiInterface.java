@@ -11,6 +11,8 @@ import com.esgi.androtopic.Data.Model.Posts;
 import com.esgi.androtopic.Data.Model.Topics;
 import com.esgi.androtopic.Data.Model.User;
 
+import org.w3c.dom.Comment;
+
 import java.util.List;
 
 import retrofit2.Call;

@@ -397,20 +397,21 @@ public class CallService implements IAuthService, INewsService, ITopicService, I
     }
 
     @Override
-    public void getComments(String token, final IServiceResultListener<List<Comments>> isrl) {
+    public void getComments(String token, String news, final IServiceResultListener<Comments> isrl) {
         ApiCall.getRetrofitInstance().getComments(token)
                 .enqueue(new Callback<List<Comments>>() {
                     @Override
                     public void onResponse(Call<List<Comments>> call, Response<List<Comments>> response) {
-                        ServiceResult<List<Comments>> sr = new ServiceResult<List<Comments>>();
+                        ServiceResult<Comments> sr = new ServiceResult<Comments>();
+                        sr.setData(response.body());
                         sr.setResponseCode(response.code());
-                        Log.i("RESPONSE : ", response.message());
+                        Log.i("RESPONSE : ", "" + response.code());
                         isrl.onResult(sr);
                     }
 
                     @Override
                     public void onFailure(Call<List<Comments>> call, Throwable t) {
-                        ServiceResult<List<Comments>> sr = new ServiceResult<List<Comments>>();
+                        ServiceResult<Comments> sr = new ServiceResult<Comments>();
                         sr.setException(t);
                         Log.i("FAILURE : ", "No response from server");
                         Log.i("CAUSE : ", t.getMessage().toString());
