@@ -79,7 +79,7 @@ public interface ApiInterface {
     Call<Void> getNews(@Path("id") int id);
 
     @GET("/posts")
-    Call<Void> getPosts();
+    Call<List<PostPost>> getPosts(@Header("Authorization") String token);
 
     @GET("/posts/{id}")
     Call<Void> getPost(@Path("id") int id);

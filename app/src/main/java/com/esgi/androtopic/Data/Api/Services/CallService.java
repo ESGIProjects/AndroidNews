@@ -9,6 +9,7 @@ import com.esgi.androtopic.Data.Model.News;
 import com.esgi.androtopic.Data.Model.PostAuth;
 import com.esgi.androtopic.Data.Model.PostComment;
 import com.esgi.androtopic.Data.Model.PostNews;
+import com.esgi.androtopic.Data.Model.PostPost;
 import com.esgi.androtopic.Data.Model.PostSubscribe;
 import com.esgi.androtopic.Data.Model.PostTopic;
 import com.esgi.androtopic.Data.Model.Topics;
@@ -96,8 +97,8 @@ public class CallService implements IAuthService, INewsService, ITopicService, I
                 });
     }
 
-    public void postNews(String token,PostNews pn, final IServiceResultListener<Void> isrl){
-        ApiCall.getRetrofitInstance().postNews(token,pn)
+    public void postNews(String token, PostNews pn, final IServiceResultListener<Void> isrl) {
+        ApiCall.getRetrofitInstance().postNews(token, pn)
                 .enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
@@ -119,11 +120,11 @@ public class CallService implements IAuthService, INewsService, ITopicService, I
                 });
     }
 
-    public void postNews(int i, IServiceResultListener<Void> isrl){
+    public void postNews(int i, IServiceResultListener<Void> isrl) {
 
     }
 
-    public void delNews(String token,String id, final IServiceResultListener<Void> isrl){
+    public void delNews(String token, String id, final IServiceResultListener<Void> isrl) {
         ApiCall.getRetrofitInstance().delNews(token, id)
                 .enqueue(new Callback<Void>() {
                     @Override
@@ -145,7 +146,7 @@ public class CallService implements IAuthService, INewsService, ITopicService, I
                 });
     }
 
-    public void getNews(String token, final IServiceResultListener<News> isrl){
+    public void getNews(String token, final IServiceResultListener<News> isrl) {
         ApiCall.getRetrofitInstance().getNews(token)
                 .enqueue(new Callback<List<News>>() {
                     @Override
@@ -169,12 +170,12 @@ public class CallService implements IAuthService, INewsService, ITopicService, I
                 });
     }
 
-    public void getNews(int i, IServiceResultListener<Void> isrl){
+    public void getNews(int i, IServiceResultListener<Void> isrl) {
 
     }
 
-    public void putNews(String token,PostNews pn ,String id, final IServiceResultListener<Void> isrl){
-        ApiCall.getRetrofitInstance().putNews(token,pn, id)
+    public void putNews(String token, PostNews pn, String id, final IServiceResultListener<Void> isrl) {
+        ApiCall.getRetrofitInstance().putNews(token, pn, id)
                 .enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
@@ -195,8 +196,8 @@ public class CallService implements IAuthService, INewsService, ITopicService, I
                 });
     }
 
-    public void postTopic(String token, PostTopic pt, final IServiceResultListener<Void> isrl){
-        ApiCall.getRetrofitInstance().postTopic(token,pt)
+    public void postTopic(String token, PostTopic pt, final IServiceResultListener<Void> isrl) {
+        ApiCall.getRetrofitInstance().postTopic(token, pt)
                 .enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
@@ -218,7 +219,7 @@ public class CallService implements IAuthService, INewsService, ITopicService, I
                 });
     }
 
-    public void delTopic(String token,String id, final IServiceResultListener<Void> isrl){
+    public void delTopic(String token, String id, final IServiceResultListener<Void> isrl) {
         ApiCall.getRetrofitInstance().delTopic(token, id)
                 .enqueue(new Callback<Void>() {
                     @Override
@@ -240,7 +241,7 @@ public class CallService implements IAuthService, INewsService, ITopicService, I
                 });
     }
 
-    public void getTopics(String token, final IServiceResultListener<Topics> isrl){
+    public void getTopics(String token, final IServiceResultListener<Topics> isrl) {
         ApiCall.getRetrofitInstance().getTopics(token)
                 .enqueue(new Callback<List<Topics>>() {
                     @Override
@@ -264,11 +265,11 @@ public class CallService implements IAuthService, INewsService, ITopicService, I
                 });
     }
 
-    public void getTopic(int i, IServiceResultListener<Void> isrl){
+    public void getTopic(int i, IServiceResultListener<Void> isrl) {
 
     }
 
-    public void putTopic(String token,PostTopic pn ,String id, final IServiceResultListener<Void> isrl) {
+    public void putTopic(String token, PostTopic pn, String id, final IServiceResultListener<Void> isrl) {
         ApiCall.getRetrofitInstance().putTopic(token, pn, id)
                 .enqueue(new Callback<Void>() {
                     @Override
@@ -291,7 +292,7 @@ public class CallService implements IAuthService, INewsService, ITopicService, I
     }
 
 
-    public void getUser(String token,final IServiceResultListener<User> isrl){
+    public void getUser(String token, final IServiceResultListener<User> isrl) {
         ApiCall.getRetrofitInstance().getUser(token).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
@@ -313,12 +314,12 @@ public class CallService implements IAuthService, INewsService, ITopicService, I
         });
     }
 
-    public static String getToken(Context context){
+    public static String getToken(Context context) {
         RealmResults<User> result = RealmInstance.getRealmInstance(context).where(User.class).findAll();
         return "Bearer " + result.get(0).getToken();
     }
 
-    public static String getID(Context context){
+    public static String getID(Context context) {
         RealmResults<User> result = RealmInstance.getRealmInstance(context).where(User.class).findAll();
         return result.get(0).getId();
     }
@@ -335,9 +336,33 @@ public class CallService implements IAuthService, INewsService, ITopicService, I
                         isrl.onResult(sr);
                     }
 
-                    @Override
                     public void onFailure(Call<Void> call, Throwable t) {
                         ServiceResult<Void> sr = new ServiceResult<>();
+                        sr.setException(t);
+                        Log.i("FAILURE : ", "No response from server");
+                        Log.i("CAUSE : ", t.getMessage().toString());
+                        isrl.onResult(sr);
+                    }
+                });
+    }
+
+    public void getPosts(String token, final IServiceResultListener<PostPost> isrl) {
+        ApiCall.getRetrofitInstance().getPosts(token)
+                .enqueue(new Callback<List<PostPost>>() {
+                    @Override
+                    public void onResponse(Call<List<PostPost>> call, Response<List<PostPost>> response) {
+                        ServiceResult<PostPost> sr = new ServiceResult<PostPost>();
+                        sr.setResponseCode(response.code());
+                        sr.setData(response.body());
+                        Log.i("RESPONSE : ", response.message());
+                        Log.i("SUCCESS : ", "TopicsList is created ! !");
+                        0
+                        isrl.onResult(sr);
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<PostPost>> call, Throwable t) {
+                        ServiceResult<PostPost> sr = new ServiceResult<PostPost>();
                         sr.setException(t);
                         Log.i("FAILURE : ", "No response from server");
                         Log.i("CAUSE : ", t.getMessage().toString());
@@ -434,6 +459,7 @@ public class CallService implements IAuthService, INewsService, ITopicService, I
                         Log.i("FAILURE : ", "No response from server");
                         Log.i("CAUSE : ", t.getMessage().toString());
                         isrl.onResult(sr);
+
                     }
                 });
     }
