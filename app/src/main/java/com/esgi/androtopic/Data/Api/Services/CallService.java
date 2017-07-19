@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.esgi.androtopic.Data.Api.IServiceResultListener;
 import com.esgi.androtopic.Data.Api.ServiceResult;
+import com.esgi.androtopic.Data.Model.Comments;
 import com.esgi.androtopic.Data.Model.News;
 import com.esgi.androtopic.Data.Model.PostAuth;
 import com.esgi.androtopic.Data.Model.PostComment;
@@ -16,6 +17,8 @@ import com.esgi.androtopic.Data.Model.Topics;
 import com.esgi.androtopic.Data.Model.User;
 import com.esgi.androtopic.Tools.ApiCall;
 import com.esgi.androtopic.Tools.RealmInstance;
+
+import org.w3c.dom.Comment;
 
 import java.util.List;
 
@@ -394,20 +397,20 @@ public class CallService implements IAuthService, INewsService, ITopicService, I
     }
 
     @Override
-    public void getComments(String token, final IServiceResultListener<Void> isrl) {
+    public void getComments(String token, final IServiceResultListener<List<Comments>> isrl) {
         ApiCall.getRetrofitInstance().getComments(token)
-                .enqueue(new Callback<Void>() {
+                .enqueue(new Callback<List<Comments>>() {
                     @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                        ServiceResult<Void> sr = new ServiceResult<>();
+                    public void onResponse(Call<List<Comments>> call, Response<List<Comments>> response) {
+                        ServiceResult<List<Comments>> sr = new ServiceResult<List<Comments>>();
                         sr.setResponseCode(response.code());
                         Log.i("RESPONSE : ", response.message());
                         isrl.onResult(sr);
                     }
 
                     @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
-                        ServiceResult<Void> sr = new ServiceResult<>();
+                    public void onFailure(Call<List<Comments>> call, Throwable t) {
+                        ServiceResult<List<Comments>> sr = new ServiceResult<List<Comments>>();
                         sr.setException(t);
                         Log.i("FAILURE : ", "No response from server");
                         Log.i("CAUSE : ", t.getMessage().toString());
@@ -417,20 +420,20 @@ public class CallService implements IAuthService, INewsService, ITopicService, I
     }
 
     @Override
-    public void getComment(String token, int i, final IServiceResultListener<Void> isrl) {
+    public void getComment(String token, int i, final IServiceResultListener<Comments> isrl) {
         ApiCall.getRetrofitInstance().getComment(token, i)
-                .enqueue(new Callback<Void>() {
+                .enqueue(new Callback<Comments>() {
                     @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                        ServiceResult<Void> sr = new ServiceResult<>();
+                    public void onResponse(Call<Comments> call, Response<Comments> response) {
+                        ServiceResult<Comments> sr = new ServiceResult<Comments>();
                         sr.setResponseCode(response.code());
                         Log.i("RESPONSE : ", response.message());
                         isrl.onResult(sr);
                     }
 
                     @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
-                        ServiceResult<Void> sr = new ServiceResult<>();
+                    public void onFailure(Call<Comments> call, Throwable t) {
+                        ServiceResult<Comments> sr = new ServiceResult<>();
                         sr.setException(t);
                         Log.i("FAILURE : ", "No response from server");
                         Log.i("CAUSE : ", t.getMessage().toString());

@@ -1,5 +1,6 @@
 package com.esgi.androtopic.Data.Api;
 
+import com.esgi.androtopic.Data.Model.Comments;
 import com.esgi.androtopic.Data.Model.News;
 import com.esgi.androtopic.Data.Model.PostAuth;
 import com.esgi.androtopic.Data.Model.PostComment;
@@ -67,10 +68,10 @@ public interface ApiInterface {
     //GET ENDPOINTS
 
     @GET("/comments")
-    Call<Void> getComments(@Header("Authorization") String token);
+    Call<List<Comments>> getComments(@Header("Authorization") String token);
 
     @GET("/comments/{id}")
-    Call<Void> getComment(@Header("Authorization") String token, @Path("id") int id);
+    Call<Comments> getComment(@Header("Authorization") String token, @Path("id") int id);
 
     @GET("/news")
     Call<List<News>> getNews(@Header("Authorization") String token);
