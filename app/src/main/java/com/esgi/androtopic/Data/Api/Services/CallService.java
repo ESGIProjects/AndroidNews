@@ -324,6 +324,7 @@ public class CallService implements IAuthService, INewsService, ITopicService, I
         return result.get(0).getId();
     }
 
+
     @Override
     public void postComments(String token, PostComment pc, final IServiceResultListener<Void> isrl) {
         ApiCall.getRetrofitInstance().postComments(token, pc)
@@ -356,7 +357,6 @@ public class CallService implements IAuthService, INewsService, ITopicService, I
                         sr.setData(response.body());
                         Log.i("RESPONSE : ", response.message());
                         Log.i("SUCCESS : ", "TopicsList is created ! !");
-                        0
                         isrl.onResult(sr);
                     }
 
